@@ -12,6 +12,7 @@ export default function Catalogue() {
   const [stars, setStars] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(true);
+  const [isSelected, setIsSelected] = useState("");
 
   const navigate = useNavigate();
 
@@ -29,6 +30,21 @@ export default function Catalogue() {
     M: classM,
   };
 
+  const constellations = [
+    "Ursa Major",
+    "Ursa Minor",
+    "Cassiopeia",
+    "Cepheus",
+    "Draco",
+    "Cygnus",
+    "Lyra",
+    "Hercules",
+    "Perseus",
+    "Auriga",
+    "Andromeda",
+    "Boötes",
+  ];
+
   const getSpectralImage = (spectralClass) => {
     const spectralType = spectralClass?.charAt(0);
     return imageBySpectral[spectralType] || classO;
@@ -37,6 +53,7 @@ export default function Catalogue() {
   async function getStarsByCons(constellation) {
     setLoading(true);
     setError(false);
+    setIsSelected(constellation);
     try {
       const response = await fetch(
         `https://api.api-ninjas.com/v1/stars?constellation=${constellation}`,
@@ -46,7 +63,7 @@ export default function Catalogue() {
             "X-Api-Key": "6oXjVCvrX7p3HCkLv/wttQ==GWagAeh4QbPVEqfk",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -66,9 +83,11 @@ export default function Catalogue() {
   }
 
   const fetchStars = async () => {
-    console.log("triggered");
+
     setLoading(true);
     setError(false);
+
+    setIsSelected("")
     try {
       // const name = 'vega';
       const response = await fetch(
@@ -79,7 +98,7 @@ export default function Catalogue() {
             "X-Api-Key": "6oXjVCvrX7p3HCkLv/wttQ==GWagAeh4QbPVEqfk",
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -106,24 +125,28 @@ export default function Catalogue() {
 
   return (
     <div className="catalogue" id="catalogue">
+      <div className="decoration"></div>
       <div className="catalogue-wrapper-header">
-        <p>Check out our selection of stars</p>
+        <p className="title">Check out our selection of stars</p>
       </div>
       <div className="catalogue-wrapper">
         <ul className="catalogue-cons">
-          <li onClick={() => fetchStars()}>See all</li>
-          <li onClick={() => getStarsByCons("Ursa Major")}>Ursa Major</li>
-          <li onClick={() => getStarsByCons("Ursa Minor")}>Ursa Minor</li>
-          <li onClick={() => getStarsByCons("Cassiopeia")}>Cassiopeia</li>
-          <li onClick={() => getStarsByCons("Cepheus")}>Cepheus</li>
-          <li onClick={() => getStarsByCons("Draco")}>Draco</li>
-          <li onClick={() => getStarsByCons("Cygnus")}>Cygnus</li>
-          <li onClick={() => getStarsByCons("Lyra")}>Lyra</li>
-          <li onClick={() => getStarsByCons("Hercules")}>Hercules</li>
-          <li onClick={() => getStarsByCons("Perseus")}>Perseus</li>
-          <li onClick={() => getStarsByCons("Auriga")}>Auriga</li>
-          <li onClick={() => getStarsByCons("Andromeda")}>Andromeda</li>
-          <li onClick={() => getStarsByCons("Boötes")}>Boötes</li>
+          <li onClick={() => fetchStars()}  className={
+                  isSelected === "" ? "defaultSmallButton" : ""
+                }>
+            See all
+          </li>
+          {constellations.length &&
+            constellations.map((constellation) => (
+              <li
+                onClick={() => getStarsByCons(constellation)}
+                className={
+                  isSelected === constellation ? "defaultSmallButton" : ""
+                }
+              >
+                { constellation }
+              </li>
+            ))}
         </ul>
 
         <div className="star-area">
@@ -139,28 +162,23 @@ export default function Catalogue() {
             stars.map((star, index) => (
               <div className="star-product-wrapper" key={index}>
                 <div className="star-product-wrapper-inner">
-                  
                   <img
                     src={getSpectralImage(star.spectral_class)}
                     alt={star.name}
                   />
-                  <div className="divider"></div>
 
                   <div className="content">
-                  <p className="title">{star.name}</p>
-                  <li>{star.constellation}</li>
+                    <p className="title">{star.name}</p>
+                    <li>{star.constellation}</li>
 
-
-                  <button
-                    className="default-glow"
-                    onClick={() => handleSeeMore(star)}
-                  >
-                    See more
-                  </button>
-                
+                    <button
+                      className="default-glow"
+                      onClick={() => handleSeeMore(star)}
+                    >
+                      See more
+                    </button>
+                  </div>
                 </div>
-                </div>
-
               </div>
             ))}
         </div>
