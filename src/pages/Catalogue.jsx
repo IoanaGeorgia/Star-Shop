@@ -127,7 +127,7 @@ export default function Catalogue() {
     <div className="catalogue" id="catalogue">
       <div className="decoration"></div>
       <div className="catalogue-wrapper-header">
-        <p className="title">Check out our selection of stars</p>
+        <p className="title secondary-title">Check out our selection of stars</p>
       </div>
       <div className="catalogue-wrapper">
         <ul className="catalogue-cons">

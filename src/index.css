@@ -39,6 +39,8 @@ html {
 
   --defaultPadding: 2rem;
   --defaultSmallPadding: 1rem;
+
+  --smallFontSize:15px;
 }
 
 
@@ -61,6 +63,12 @@ button {
 @media(max-width:750px) {
   .title {
     font-size: 3rem;
+  }
+}
+
+@media(max-width:386px) {
+  .title {
+    font-size: 2rem;
   }
 }
 
@@ -94,6 +102,32 @@ a:focus {
   position: fixed;
   top: 0px;
   left: 0px;
+}
+
+
+.secondary-decoration.decoration {
+  background: linear-gradient(rgba(10, 10, 20, 0.205), rgba(10, 10, 20, 0.74)),
+    url('./assets/aboutBg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+
+}
+
+
+.title.secondary-title {
+  letter-spacing: 20px;
+  max-width: 1000px;
+  width: 100%;
+  line-height: 5rem;
+  font-weight: lighter;
+}
+
+@media(max-width:512px) {
+  .title.secondary-title {
+    letter-spacing: 5px;
+    line-height: 3.5rem;
+  }
 }
 
 #landingPage .hero {
@@ -366,7 +400,7 @@ button.default-glow:hover {
 
 .reason-wrapper .text a,
 .reason-wrapper .text a:visited {
-  font-size: 15px;
+  font-size: var(--smallFontSize);
   padding-top: 2rem;
   display: block;
 }
@@ -456,7 +490,6 @@ button.default-glow:hover {
 
 .header .logo {
   cursor: pointer;
-  max-width: 40px;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -466,7 +499,11 @@ button.default-glow:hover {
 
 .header .logo img {
   width: 100%;
-  min-width: 20px;
+  max-width: 20px;
+}
+
+.header .logo span {
+  display: inline-block;
 }
 
 .header .nav-buttons {
@@ -481,7 +518,7 @@ button.default-glow:hover {
   color: var(--defaultText);
   border: 2px solid transparent;
   padding: 6px 24px;
-  font-size: 15px;
+  font-size: var(--smallFontSize);
   letter-spacing: 1px;
   border-radius: 8px;
   cursor: pointer;
@@ -492,9 +529,85 @@ button.default-glow:hover {
   transition: var(--defaultTransition);
 }
 
+.header .mobileToggle {
+  display: none;
+}
+
+@media(max-width:693px) {
+  .header {
+    padding: 0 2rem;
+  }
+}
+
 @media(max-width:764px) {
   .header .nav-buttons {
     gap: 20px;
+  }
+}
+
+@media(max-width:590px) {
+  .header .nav-buttons {
+    display: none;
+  }
+
+  .header .mobileToggle {
+    display: block;
+    background-color: transparent;
+    border: none;
+    color: var(--defaultText);
+    font-size: 3rem;
+
+  }
+
+  .header .mobileToggle:hover {
+    text-shadow: var(--smallHoverText);
+  }
+
+  .header .mobileWrapper {
+    position: fixed;
+    top: 0px;
+    right: -10px;
+    height: 100%;
+    width: 300px;
+    border-left: 2px solid var(--cardBorder);
+    border-top: 2px solid var(--cardBorder);
+    box-shadow: 0 0 25px var(--defaultText), 0 0 10px var(--defaultText) inset;
+    ;
+    background-color: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(10px);
+    border-top-left-radius: 5px;
+    padding: var(--defaultPadding);
+    padding-top: 60px;
+    overscroll-behavior: contain;
+    overflow: hidden;
+  }
+
+  .header .mobileWrapper .nav-buttons {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 30px;
+
+  }
+
+  .header .nav-buttons button {
+    border: 1px solid var(--defaultText);
+    padding: 10px 24px;
+  }
+
+  .header button.close {
+    position: absolute;
+    top: 5px;
+    right: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 2rem;
+    color: var(--defaultText)
+  }
+
+  .header .mobileWrapper .logo {
+    justify-content: center;
+    margin-top: auto;
   }
 }
 
@@ -514,7 +627,7 @@ footer {
   color: var(--defaultText);
   position: relative;
   z-index: 99999;
-  font-size: 16px;
+  font-size: var(--smallFontSize);
 }
 
 
@@ -523,7 +636,8 @@ footer .logo {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 16px;
+  font-size: var(--smallFontSize
+  );
   color: #FFF;
 }
 
@@ -541,7 +655,7 @@ footer .logo img {
   color: var(--defaultText);
   border: 2px solid var(--defaultText);
   padding: 6px 24px;
-  font-size: 15px;
+  font-size: var(--smallFontSize);
   letter-spacing: 1px;
   border-radius: 8px;
   cursor: pointer;
@@ -550,6 +664,12 @@ footer .logo img {
   backdrop-filter: blur(2px);
   cursor: pointer;
   transition: var(--defaultTransition)
+}
+
+@media(max-width:590px) {
+  .header .nav-buttons button.defaultSmallButton {
+    padding: 10px 24px;
+  }
 }
 
 .header .nav-buttons button:hover,
@@ -561,9 +681,7 @@ footer .logo img {
 }
 
 
-.about {
-  padding-top: var(--headerHeight);
-}
+
 
 .landing .hero,
 .catalogue .catalogue-wrapper-header {
@@ -606,24 +724,16 @@ footer .logo img {
 
 .about {
   background-color: black;
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
   min-height: 100vh;
   height: 100%;
   background-size: 100%;
   width: 100%;
-  padding-top: var(--defaultPadding);
+  padding-top: var(--headerHeight);
   padding-bottom: var(--defaultPadding);
-  ;
-}
 
-.about .decoration {
-  background: linear-gradient(rgba(10, 10, 20, 0.205), rgba(10, 10, 20, 0.74)),
-    url('./assets/aboutBg.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
 
 }
+
 
 .about main {
   position: relative;
@@ -631,7 +741,7 @@ footer .logo img {
 
 .about .subtitle {
   color: white;
-  min-width: 600px;
+  max-width: 600px;
   font-size: 1.5rem;
   font-weight: 800;
   margin-top: var(--defaultPadding);
@@ -688,7 +798,7 @@ footer .logo img {
   height: 200px;
   background: #ffffff;
   clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%, 0 21%);
-    display: inline-block;
+  display: inline-block;
   filter: drop-shadow(1px 1px 4px rgb(255, 255, 255));
 }
 
@@ -703,6 +813,7 @@ footer .logo img {
   background-position: 50% 50%;
   clip-path: polygon(20% 0, 100% 0, 100% 100%, 0 100%, 0 21%);
 }
+
 .about-section li {
   color: white;
   font-size: 1.3rem;
@@ -718,7 +829,7 @@ footer .logo img {
 .about-section .timeline-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   gap: 25px;
   position: relative;
   margin-top: 2rem;
@@ -733,6 +844,11 @@ footer .logo img {
   box-shadow: var(--defaultGlowCard);
   box-sizing: border-box;
   transition: var(--defaultTransition);
+}
+
+.about-section .year-box.active {
+  text-shadow: var(--smallHoverText);
+  box-shadow: var(--smallHoverBorder);
 }
 
 .about-section .year-box:hover {
@@ -752,6 +868,35 @@ footer .logo img {
   background-color: transparent;
   margin-top: 10px;
   box-sizing: border-box;
+}
+
+@media(max-width:1179px) {
+  .about-section .info-box {
+    max-width: 900px;
+
+  }
+}
+
+
+@media(max-width:954px) {
+  .about-section .info-box {
+    max-width: 650px;
+
+  }
+}
+
+@media(max-width:729px) {
+  .about-section .info-box {
+    max-width: 450px;
+
+  }
+}
+
+@media(max-width:504px) {
+  .about-section .info-box {
+    text-align: center;
+
+  }
 }
 
 /* catalogue */
@@ -903,6 +1048,27 @@ footer .logo img {
 
 }
 
+@media(max-width:1142px) {
+  #catalogue .catalogue-wrapper {
+    max-width: 100%;
+  }
+
+  #catalogue .catalogue-cons {
+    margin: 0px
+  }
+}
+
+
+@media(max-width:914px) {
+  #catalogue .catalogue-cons {
+    gap: 0rem;
+  }
+
+  #catalogue .star-area {
+    margin-top: 4rem;
+  }
+}
+
 .star-area .loadingData {
   width: 100%;
   min-height: 100vh;
@@ -1036,82 +1202,6 @@ footer .logo img {
   width: 100%
 }
 
-#contact {
-  min-height: 100vh;
-  color: white;
-}
-
-#contact>p {
-  font-size: 2.5rem;
-  color: var(--defaultText);
-  max-width: 1000px;
-  margin: auto;
-  padding-top: 2rem;
-  padding-bottom: 1rem;
-  text-align: center;
-
-}
-
-#contact form {
-  display: flex;
-  flex-direction: column;
-}
-
-#contact {
-  width: 100%;
-  position: relative;
-  background-color: #000;
-}
-
-#contact .contact-wrapper {
-  max-width: 800px;
-  margin: auto;
-  margin-top: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.contact-wrapper div {
-  font-size: 20px;
-}
-
-.contact-wrapper div:first-of-type {
-  font-weight: bold;
-}
-
-#contact .form-wrapper {
-  margin: auto;
-  margin-top: 3rem;
-  background-color: var(--defaultText);
-  max-width: 600px;
-  padding: 3rem;
-  border-radius: 20px;
-  font-size: 17px;
-}
-
-#contact .form-wrapper label {
-  margin-top: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-left: 10px;
-}
-
-#contact .form-wrapper input,
-#contact .form-wrapper input:focus,
-#contact .form-wrapper textarea,
-#contact .form-wrapper textarea:focus {
-  min-height: 50px;
-  border-radius: 5px;
-  border: none;
-  outline: none;
-  padding: 5px;
-}
-
-#contact .form-wrapper textarea,
-#contact .form-wrapper textarea:focus {
-  Min-height: 100px;
-}
 
 .catalogue .decoration {
   background: linear-gradient(rgba(10, 10, 20, 0.205), rgba(10, 10, 20, 0.74)),
@@ -1142,9 +1232,88 @@ footer .logo img {
 
 }
 
-.catalogue-wrapper-header p {
-  letter-spacing: 20px;
-  max-width: 1000px;
-  line-height: 5rem;
-  font-weight: lighter;
+
+
+.contact {
+  min-height: 100vh;
+}
+
+.contact .contact-wrapper {
+  position: relative;
+  padding: var(--defaultPadding);
+  padding-top: var(--headerHeight);
+  display: flex;
+  flex-direction: column;
+  gap: var(--defaultPadding);
+}
+
+.contact .title {
+  text-align: center;
+  margin: auto;
+  margin-top: var(--defaultPadding);
+}
+
+.contact .subtitle {
+  color: white;
+  text-align: center;
+  min-width: 600px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-top: 2rem;
+  font-weight: normal;
+  text-transform: uppercase;
+  letter-spacing: 10px;
+  font-weight: bolder;
+}
+
+.contact .card {
+  max-width: var(--defaultContainerWidth);
+  margin: auto;
+  padding: var(--defaultPadding);
+  width: 100%;
+}
+
+.contact form {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  width: 100%;
+  margin: auto;
+  margin-top: var(--defaultPadding)
+}
+
+.contact label {
+  margin-top: var(--defaultPadding);
+  margin-bottom: 15px;
+}
+
+.contact input,
+textarea {
+  padding: 20px;
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+  color: var(--defaultText);
+  border: var(--cardBorderStyle);
+  border-radius: 5px;
+  outline: none;
+
+}
+
+.contact input:focus,
+textarea:focus {
+  box-shadow: 0 0 15px var(--defaultText), 0 0 10px var(--defaultText) inset;
+  ;
+}
+
+.contact button.defaultSmallButton {
+  padding: 15px 144px;
+  max-width: fit-content;
+  margin: auto;
+  margin-top: var(--headerHeight)
+}
+
+.contact form .error {
+  font-size: var(--smallFontSize);
+  margin-top: 15px;
+  color: rgba(255, 0, 0, 0.842);
 }

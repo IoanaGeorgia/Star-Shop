@@ -1,40 +1,133 @@
+import { useState } from "react";
+
 export default function Contact() {
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState({
+    name: [],
+    email: [],
+    message: [],
+  });
+
+  const handleInput = (e) => {
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+
+    const newErrors = {
+      name: [],
+      email: [],
+      message: [],
+    };
+
+    if (!data.name.trim()) {
+      newErrors.name.push("Name is required");
+    } else if (data.name.trim().length < 2) {
+      newErrors.name.push("Name is invalid (too short)");
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!data.email.trim()) {
+      newErrors.email.push("Email is required");
+    } else if (!emailRegex.test(data.email)) {
+      newErrors.email.push("Email address is invalid");
+    }
+
+    if (!data.message.trim()) {
+      newErrors.message.push("Message is required");
+    } else if (data.message.trim().length < 10) {
+      newErrors.message.push(
+        "Message is invalid (must be at least 10 characters)",
+      );
+    }
+
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some((arr) => arr.length > 0);
+
+    if (!hasErrors) {
+      console.log("Form submitted successfully:", data);
+    }
+  };
+
   return (
-    <div className="contact" id="contact">
-      <p>Contact</p>
+    <div className="contact">
+      <div className="secondary-decoration decoration"></div>
 
       <div className="contact-wrapper">
-        <div>Phone:</div>
-        <div>0999999999</div>
-      </div>
+        <p className="title secondary-title">Contact</p>
+        <p className=" subtitle">Talk to us</p>
 
-      <div className="contact-wrapper">
-        <div>Email:</div>
-        <div>stars@andromeda.com</div>
-      </div>
+        <div className="card">
+          <div>Phone:</div>
+          <div>0999999999</div>
+        </div>
 
-      <div className="contact-wrapper">
-        <div>Address:</div>
-        <div>Longdon Street, Atlanta, Georgia</div>
-      </div>
+        <div className="card">
+          <div>Email:</div>
+          <div>stars@andromeda.com</div>
+        </div>
 
-      <div className="form-wrapper">
-        <p>Have anything to share with us?</p>
-        <p>Leave us a message below:</p>
+        <div className="card">
+          <div>Address:</div>
+          <div>Longdon Street, Atlanta, Georgia</div>
+        </div>
 
-        <form>
-          <label>Name</label>
-          <input type="text"></input>
+        <div className="form-wrapper">
+          <p className="subtitle">Have anything to share with us?</p>
+          <p className="subtitle">Leave us a message below:</p>
 
-          <label>Last name</label>
-          <input type="text"></input>
+          <form>
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              value={data.name}
+              onChange={handleInput}
+            />
+            {errors.name &&
+              errors.name.map((error, i) => (
+                <p className="error" key={i}>
+                  {error}
+                </p>
+              ))}
 
-          <label>Email address:</label>
-          <input type="email"></input>
+            <label>Email address:</label>
+            <input
+              type="email"
+              name="email"
+              value={data.email}
+              onChange={handleInput}
+            />
+            {errors.email &&
+              errors.email.map((error, i) => (
+                <p className="error" key={i}>
+                  {error}
+                </p>
+              ))}
 
-          <label>Your message for us:</label>
-          <textarea></textarea>
-        </form>
+            <label>Your message for us:</label>
+            <textarea
+              name="message"
+              value={data.message}
+              onChange={handleInput}
+            />
+            {errors.message &&
+              errors.message.map((error, i) => (
+                <p className="error" key={i}>
+                  {error}
+                </p>
+              ))}
+            <button className="defaultSmallButton" onClick={submitForm}>
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

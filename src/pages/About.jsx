@@ -19,8 +19,8 @@ const data = [
 ];
 
 export default function About() {
-  const [infoIndex, setInfoIndex] = useState(0);
-  const [infoInnerIndex, setInfoInnerIndex] = useState(0);
+  const [infoIndex, setInfoIndex] = useState(null);
+  const [infoInnerIndex, setInfoInnerIndex] = useState(null);
   const itemRefs = useRef([]);
 
   useEffect(() => {
@@ -28,21 +28,22 @@ export default function About() {
   }, []);
 
   const handleClick = (clickedIndex) => {
-    const clickedTop = itemRefs.current[clickedIndex].offsetTop;
+    if (clickedIndex === infoInnerIndex) {
+    setInfoIndex(null);
+    setInfoInnerIndex(null);
+    return;
+  }
 
-    let lastInRowIndex = clickedIndex;
-    for (let i = clickedIndex + 1; i < data.length; i++) {
-      if (itemRefs.current[i].offsetTop !== clickedTop) break;
-      lastInRowIndex = i;
-    }
+  const clickedTop = itemRefs.current[clickedIndex]?.offsetTop;
 
-    if (infoIndex === lastInRowIndex) {
-      setInfoIndex(null);
-    } else {
-      setInfoIndex(lastInRowIndex);
-    }
+  let lastInRowIndex = clickedIndex;
+  for (let i = clickedIndex + 1; i < data.length; i++) {
+    if (itemRefs.current[i]?.offsetTop !== clickedTop) break;
+    lastInRowIndex = i;
+  }
 
-    setInfoInnerIndex(clickedIndex);
+  setInfoIndex(lastInRowIndex);
+  setInfoInnerIndex(clickedIndex);
   };
 
   const elements = [];
@@ -51,7 +52,7 @@ export default function About() {
     elements.push(
       <div
         key={item.year}
-        className="year-box"
+        className={`year-box ${index === infoInnerIndex ? "active" : ""}`}
         onClick={() => handleClick(index)}
         ref={(el) => (itemRefs.current[index] = el)}
       >
@@ -70,7 +71,7 @@ export default function About() {
 
   return (
     <div className="about" id="about">
-      <div className="decoration"></div>
+      <div className="secondary-decoration decoration"></div>
 
       <main>
         <div className="about-section">
