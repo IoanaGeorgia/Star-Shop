@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Star-Shop/static/css/main.990da6d9.css",
-    "main.js": "/Star-Shop/static/js/main.6193b503.js",
+    "main.css": "/Star-Shop/static/css/main.18dad0f4.css",
+    "main.js": "/Star-Shop/static/js/main.ded3c593.js",
     "static/js/453.a1508190.chunk.js": "/Star-Shop/static/js/453.a1508190.chunk.js",
     "static/media/logo.png": "/Star-Shop/static/media/logo.1c9c8990fc98530dce12.png",
     "static/media/all.jpg": "/Star-Shop/static/media/all.4232bd23b950e8c2784e.jpg",
@@ -17,12 +17,12 @@
     "static/media/AST_SC_A.png": "/Star-Shop/static/media/AST_SC_A.26c80f574b7fb90bc957.png",
     "static/media/AST_SC_F.png": "/Star-Shop/static/media/AST_SC_F.3b7c69105ff7259c5619.png",
     "index.html": "/Star-Shop/index.html",
-    "main.990da6d9.css.map": "/Star-Shop/static/css/main.990da6d9.css.map",
-    "main.6193b503.js.map": "/Star-Shop/static/js/main.6193b503.js.map",
+    "main.18dad0f4.css.map": "/Star-Shop/static/css/main.18dad0f4.css.map",
+    "main.ded3c593.js.map": "/Star-Shop/static/js/main.ded3c593.js.map",
     "453.a1508190.chunk.js.map": "/Star-Shop/static/js/453.a1508190.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.990da6d9.css",
-    "static/js/main.6193b503.js"
+    "static/css/main.18dad0f4.css",
+    "static/js/main.ded3c593.js"
   ]
 }
