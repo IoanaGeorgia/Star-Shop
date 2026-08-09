@@ -23,12 +23,12 @@ export default function Header() {
         <div className="nav-buttons">
           <button onClick={() => navigate("/about")}>About</button>
           <button onClick={() => navigate("/contact")}>Contact</button>
-          <button
-            onClick={() => navigate("/account")}
-            className="defaultSmallButton"
-          >
-            Account
-          </button>
+           <button
+              onClick={() => navigate("/catalogue")}
+              className="defaultSmallButton"
+            >
+              Catalogue
+            </button>
         </div>
       )}
 
@@ -45,10 +45,10 @@ export default function Header() {
             <button onClick={() => navigate("/about")}>About</button>
             <button onClick={() => navigate("/contact")}>Contact</button>
             <button
-              onClick={() => navigate("/account")}
+              onClick={() => navigate("/catalogue")}
               className="defaultSmallButton"
             >
-              Account
+              Catalogue
             </button>
 
             <div className="logo" onClick={() => navigate("/")}>

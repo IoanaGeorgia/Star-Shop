@@ -44,43 +44,44 @@ const BuyStar = () => {
 
   return (
     <div id="buy-star-container">
-                   <h2>{star.name}</h2>
-      <div className="star-container-wrapper">
- 
-        <div className="star-image">
-          <img src={imageSrc} alt={star.name} />
-        </div>
+      <div className="secondary-decoration decoration"></div>
+      <div className="buy-wrapper">
+        <p className="title">{star.name}</p>
+        <div className="star-container-wrapper">
+          <div className="star-image">
+            <img src={imageSrc} alt={star.name} />
+          </div>
 
- 
-        <div className="star-info">
-   
-          
-          <p>
-            <strong>Constellation:</strong> {star.constellation}
-          </p>
-          <p>
-            <strong>Spectral Class:</strong> {star.spectral_class}
-          </p>
-          <p>
-            <strong>Apparent Magnitude:</strong> {star.apparent_magnitude}
-          </p>
-          <p>
-            <strong>Absolute Magnitude:</strong> {star.absolute_magnitude}
-          </p>
-          <p>
-            <strong>Distance (light-years):</strong> {star.distance_light_year}
-          </p>
-          <p>
-            <strong>Right Ascension:</strong> {star.right_ascension}
-          </p>
-          <p>
-            <strong>Declination:</strong> {star.declination}
-          </p>
-          <button className="buy-star">Buy star</button>
+          <div className="star-info card">
+            <p>
+              <span>Constellation:</span> {star.constellation}
+            </p>
+            <p>
+              <span>Spectral Class:</span> {star.spectral_class}
+            </p>
+            <p>
+              <span>Apparent Magnitude:</span> {star.apparent_magnitude}
+            </p>
+            <p>
+              <span>Absolute Magnitude:</span> {star.absolute_magnitude}
+            </p>
+            <p>
+              <span>Distance (light-years):</span> {star.distance_light_year}
+            </p>
+            <p>
+              <span>Right Ascension:</span> {star.right_ascension}
+            </p>
+            <p>
+              <span>Declination:</span> {star.declination}
+            </p>
+
+            <p className="price">456576 EE</p>
+          </div>
         </div>
       </div>
 
-      <div className="general-info">
+      <div className="buy-btn">
+        <button className="defaultSmallButton">Add to cart</button>
       </div>
     </div>
   );
