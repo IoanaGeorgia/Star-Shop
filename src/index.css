@@ -1256,7 +1256,8 @@ footer .logo img {
 .contact .subtitle {
   color: white;
   text-align: center;
-  min-width: 600px;
+  max-width: 600px;
+  width:100%;
   font-size: 1.5rem;
   font-weight: 800;
   margin-top: 2rem;
@@ -1316,4 +1317,17 @@ textarea:focus {
   font-size: var(--smallFontSize);
   margin-top: 15px;
   color: rgba(255, 0, 0, 0.842);
+}
+
+@media(max-width:516px){
+  .contact button.defaultSmallButton{
+    padding:0px 0px;
+    max-width:349px;
+    width:100%;
+    min-height:53px;
+  }
+
+  .contact .card div{
+    font-size:var(--smallFontSize)
+  }
 }
