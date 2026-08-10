@@ -1,12 +1,15 @@
 import logo from "../assets/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
 
   const [isMobile, setIsMobile] = useState(false);
+
+  const itemsInCart = useSelector((state) => state.cart.items.length);
 
   useEffect(() => {
     setIsMobile(false);
@@ -23,12 +26,21 @@ export default function Header() {
         <div className="nav-buttons">
           <button onClick={() => navigate("/about")}>About</button>
           <button onClick={() => navigate("/contact")}>Contact</button>
-           <button
-              onClick={() => navigate("/catalogue")}
-              className="defaultSmallButton"
-            >
-              Catalogue
-            </button>
+          <button
+            onClick={() => navigate("/catalogue")}
+            className="defaultSmallButton"
+          >
+            Catalogue
+          </button>
+
+          <button
+            onClick={() => navigate("/cart")}
+            className="headerCart"
+            title="see your cart"
+            aria-label="see your cart"
+          >
+            ★{itemsInCart && <span>{itemsInCart}</span>}
+          </button>
         </div>
       )}
 
@@ -49,6 +61,15 @@ export default function Header() {
               className="defaultSmallButton"
             >
               Catalogue
+            </button>
+
+            <button
+              onClick={() => navigate("/cart")}
+              className="headerCart"
+              title="See your cart"
+              aria-label="see your cart"
+            >
+              ★ See cart {itemsInCart && <span>{itemsInCart}</span>}
             </button>
 
             <div className="logo" onClick={() => navigate("/")}>

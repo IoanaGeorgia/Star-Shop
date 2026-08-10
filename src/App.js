@@ -6,10 +6,13 @@ import Catalogue from "./pages/Catalogue";
 import BuyStar from "./pages/BuyStar";
 import Contact from "./pages/Contact";
 import Footer from "./pages/Footer";
+import Cart from "./pages/Cart";
+import ScrollToTop from "./pages/ScrollTotop";
 
 function App() {
   return (
     <BrowserRouter basename="/Star-Shop">
+      <ScrollToTop />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -17,6 +20,8 @@ function App() {
         <Route path="/catalogue" element={<Catalogue />} />
         <Route path="/buy-star" element={<BuyStar />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/cart" element={<Cart />} />
+
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <Footer />

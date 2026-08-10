@@ -8,6 +8,7 @@ import classK from "../assets/AST_SC_K.png";
 import classM from "../assets/AST_SC_M.png";
 import { useNavigate } from "react-router-dom";
 
+
 export default function Catalogue() {
   const [stars, setStars] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -83,11 +84,10 @@ export default function Catalogue() {
   }
 
   const fetchStars = async () => {
-
     setLoading(true);
     setError(false);
 
-    setIsSelected("")
+    setIsSelected("");
     try {
       // const name = 'vega';
       const response = await fetch(
@@ -127,13 +127,16 @@ export default function Catalogue() {
     <div className="catalogue" id="catalogue">
       <div className="decoration"></div>
       <div className="catalogue-wrapper-header">
-        <p className="title secondary-title">Check out our selection of stars</p>
+        <p className="title secondary-title">
+          Check out our selection of stars
+        </p>
       </div>
       <div className="catalogue-wrapper">
         <ul className="catalogue-cons">
-          <li onClick={() => fetchStars()}  className={
-                  isSelected === "" ? "defaultSmallButton" : ""
-                }>
+          <li
+            onClick={() => fetchStars()}
+            className={isSelected === "" ? "defaultSmallButton" : ""}
+          >
             See all
           </li>
           {constellations.length &&
@@ -144,13 +147,18 @@ export default function Catalogue() {
                   isSelected === constellation ? "defaultSmallButton" : ""
                 }
               >
-                { constellation }
+                {constellation}
               </li>
             ))}
         </ul>
 
         <div className="star-area">
-          {isLoading && <div className="loadingData">...loading</div>}
+          {isLoading && (
+            <div className="loadingData">
+              <div className="loader"></div>
+              <span>...loading</span>
+            </div>
+          )}
 
           {isError && (
             <div className="errorData">

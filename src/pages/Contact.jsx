@@ -65,12 +65,12 @@ export default function Contact() {
 
         <div className="card">
           <div>Phone:</div>
-          <div>0999999999</div>
+          <div><a href="tel:+440744123345">+440744123345</a></div>
         </div>
 
         <div className="card">
           <div>Email:</div>
-          <div>stars@andromeda.com</div>
+          <div><a href="mailto:star_shop@starhoo.com">star_shop@starhoo.com</a></div>
         </div>
 
         <div className="card">
@@ -89,6 +89,7 @@ export default function Contact() {
               name="name"
               value={data.name}
               onChange={handleInput}
+                maxLength="255"
             />
             {errors.name &&
               errors.name.map((error, i) => (
@@ -103,6 +104,7 @@ export default function Contact() {
               name="email"
               value={data.email}
               onChange={handleInput}
+              maxLength="255"
             />
             {errors.email &&
               errors.email.map((error, i) => (
@@ -116,6 +118,7 @@ export default function Contact() {
               name="message"
               value={data.message}
               onChange={handleInput}
+              maxLength="1000"
             />
             {errors.message &&
               errors.message.map((error, i) => (

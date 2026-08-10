@@ -29,21 +29,21 @@ export default function About() {
 
   const handleClick = (clickedIndex) => {
     if (clickedIndex === infoInnerIndex) {
-    setInfoIndex(null);
-    setInfoInnerIndex(null);
-    return;
-  }
+      setInfoIndex(null);
+      setInfoInnerIndex(null);
+      return;
+    }
 
-  const clickedTop = itemRefs.current[clickedIndex]?.offsetTop;
+    const clickedTop = itemRefs.current[clickedIndex]?.offsetTop;
 
-  let lastInRowIndex = clickedIndex;
-  for (let i = clickedIndex + 1; i < data.length; i++) {
-    if (itemRefs.current[i]?.offsetTop !== clickedTop) break;
-    lastInRowIndex = i;
-  }
+    let lastInRowIndex = clickedIndex;
+    for (let i = clickedIndex + 1; i < data.length; i++) {
+      if (itemRefs.current[i]?.offsetTop !== clickedTop) break;
+      lastInRowIndex = i;
+    }
 
-  setInfoIndex(lastInRowIndex);
-  setInfoInnerIndex(clickedIndex);
+    setInfoIndex(lastInRowIndex);
+    setInfoInnerIndex(clickedIndex);
   };
 
   const elements = [];
@@ -208,6 +208,11 @@ export default function About() {
             enforcing strict standards against deceptive digital alterations. We
             empower creators to explore the universe transparently, ethically,
             and with complete data provenance.
+          </p>
+          <p className="content">
+            <a href="https://www.esa.int/" target="_blank">
+              Visit the ESA website →{" "}
+            </a>
           </p>
         </div>
       </main>

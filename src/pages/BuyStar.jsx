@@ -1,4 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCart } from "../slices/cart";
 
 import classO from "../assets/AST_SC_O.png";
 import classA from "../assets/AST_SC_A.png";
@@ -24,10 +26,21 @@ const getSpectralImage = (spectralClass) => {
   return imageBySpectral[spectralType];
 };
 
+
 const BuyStar = () => {
+
   const { state } = useLocation();
   const star = state?.star;
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
+
+  const addItemToCart = () => {
+  if(star){
+    dispatch(addToCart(star))
+  }
+}
+
 
   if (!star) {
     return (
@@ -81,7 +94,7 @@ const BuyStar = () => {
       </div>
 
       <div className="buy-btn">
-        <button className="defaultSmallButton">Add to cart</button>
+        <button className="defaultSmallButton" onClick={()=>addItemToCart()}>Add to cart</button>
       </div>
     </div>
   );

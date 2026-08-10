@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ export default function Home() {
               <p>
                Trace your place among the cosmos. Every star in our catalog is uniquely registered and charted in the official celestial registry, complete with precise coordinates and custom naming rights. Claim a timeless piece of the night sky for yourself or someone extraordinary.
               </p>
-              <button className="default-glow">See selection</button>
+              <button className="default-glow" onClick={() => navigate("/catalogue")}>See selection</button>
             </div>
           </div>
 
@@ -91,7 +92,7 @@ export default function Home() {
               <p>
                From circumpolar beacons that never set to brilliant binaries in Ursa Major and Cygnus, explore our curated selection of visible-magnitude stars. Filter by constellation, brightness, or distance to find the perfect star that resonates with your journey.
               </p>
-              <button className="default-glow">See selection</button>
+              <button className="default-glow" onClick={() => navigate("/catalogue")}>See selection</button>
             </div>
           </div>
         </div>
@@ -114,7 +115,7 @@ export default function Home() {
              Every registration comes with an official certificate of registry, cross-referenced with astronomical databases recognized by major space agencies. Complete with exact right ascension, declination, and spectral class, your ownership document is both a personal keepsake and a scientifically accurate record.
               </p>
               <a href="https://www.esa.int/" target="_blank">
-                Visit the ESA website →{" "}
+                Visit the ESA website →
               </a>
             </div>
 
@@ -139,19 +140,19 @@ export default function Home() {
           <div className="contact-texts">
             <p className="title">Contact us</p>
 
-            <a href="https://www.esa.int/" target="_blank">
+            <Link to="/contact">
               Contact page →{" "}
-            </a>
+            </Link>
 
     
 
             <div className="contact-info">
-              <p>
-               Phone number: +440744123345
-              </p>
-              <p>
-                Email: star_shop@starhoo.com
-              </p>
+             <p>
+  Phone number: <a href="tel:+440744123345">+440744123345</a>
+</p>
+<p>
+  Email: <a href="mailto:star_shop@starhoo.com">star_shop@starhoo.com</a>
+</p>
              
             </div>
           </div>
