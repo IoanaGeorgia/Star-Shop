@@ -1,14 +1,11 @@
 {
   "files": {
-    "main.css": "/Star-Shop/static/css/main.6f9dcfbd.css",
-    "main.js": "/Star-Shop/static/js/main.6a87d408.js",
+    "main.css": "/Star-Shop/static/css/main.0bc38c6e.css",
+    "main.js": "/Star-Shop/static/js/main.f03ae165.js",
     "static/js/453.a1508190.chunk.js": "/Star-Shop/static/js/453.a1508190.chunk.js",
     "static/media/logo.png": "/Star-Shop/static/media/logo.1c9c8990fc98530dce12.png",
-    "static/media/all.jpg": "/Star-Shop/static/media/all.4232bd23b950e8c2784e.jpg",
-    "static/media/space-artwork-4k-z3-1366x768 (1).jpg": "/Star-Shop/static/media/space-artwork-4k-z3-1366x768 (1).76331dd7e1f380a539b0.jpg",
     "static/media/credentials.jpg": "/Star-Shop/static/media/credentials.76786ba4b265dac5b5d6.jpg",
     "static/media/table.png": "/Star-Shop/static/media/table.24c48275156fd17a70ea.png",
-    "static/media/aboutBg.jpg": "/Star-Shop/static/media/aboutBg.def340657b335875a366.jpg",
     "static/media/AST_SC_M.png": "/Star-Shop/static/media/AST_SC_M.569764b0aed487644d0d.png",
     "static/media/AST_SC_O.png": "/Star-Shop/static/media/AST_SC_O.dda769bf51c068474435.png",
     "static/media/AST_SC_B.png": "/Star-Shop/static/media/AST_SC_B.68db19e762bf924482af.png",
@@ -16,13 +13,16 @@
     "static/media/AST_SC_G.png": "/Star-Shop/static/media/AST_SC_G.58153d3888175a612ab3.png",
     "static/media/AST_SC_A.png": "/Star-Shop/static/media/AST_SC_A.26c80f574b7fb90bc957.png",
     "static/media/AST_SC_F.png": "/Star-Shop/static/media/AST_SC_F.3b7c69105ff7259c5619.png",
+    "static/media/space-artwork-4k-z3-1366x768 (1)_red.jpg": "/Star-Shop/static/media/space-artwork-4k-z3-1366x768 (1)_red.0f02f6e0028761019bc2.jpg",
+    "static/media/aboutBg_res.jpg": "/Star-Shop/static/media/aboutBg_res.d725f9892f6816fd87c6.jpg",
+    "static/media/all_res.jpg": "/Star-Shop/static/media/all_res.fa76048e4ecaef3d259f.jpg",
     "index.html": "/Star-Shop/index.html",
-    "main.6f9dcfbd.css.map": "/Star-Shop/static/css/main.6f9dcfbd.css.map",
-    "main.6a87d408.js.map": "/Star-Shop/static/js/main.6a87d408.js.map",
+    "main.0bc38c6e.css.map": "/Star-Shop/static/css/main.0bc38c6e.css.map",
+    "main.f03ae165.js.map": "/Star-Shop/static/js/main.f03ae165.js.map",
     "453.a1508190.chunk.js.map": "/Star-Shop/static/js/453.a1508190.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.6f9dcfbd.css",
-    "static/js/main.6a87d408.js"
+    "static/css/main.0bc38c6e.css",
+    "static/js/main.f03ae165.js"
   ]
 }
