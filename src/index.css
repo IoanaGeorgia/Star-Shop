@@ -89,6 +89,7 @@ a:focus {
 
 #landingPage {
   position: relative;
+  z-index:3;
 }
 
 .decoration {
@@ -106,6 +107,7 @@ a:focus {
 }
 
 
+
 .secondary-decoration.decoration {
   background: linear-gradient(rgba(10, 10, 20, 0.205), rgba(10, 10, 20, 0.74)),
     url('./assets/aboutBg_res.jpg');
@@ -113,6 +115,55 @@ a:focus {
   background-size: cover;
   height: 100%;
 
+}
+
+.decoration-par{
+    width: 100%;
+  min-height: 100vh;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  background-color: transparent;
+  z-index:1;
+  pointer-events: none;
+}
+
+.decoration-par img{
+  width:40px;
+  position: absolute;
+  will-change: transform;
+  
+}
+.decoration-par img.first {
+  width: 40px;
+  top: 15%;
+  left: 10%;
+}
+
+.decoration-par img.second {
+  width: 30px;
+  top: 40%;
+  right: 15%;
+}
+
+.decoration-par img.third {
+  width: 40px;
+  top: 70%;
+  left: 20%;
+}
+
+.decoration-par img.forth {
+  width: 35px;
+  top: 85%;
+  right: 10%;
+}
+
+
+.decoration-par img.fifth {
+  width: 45px;
+  top: 85%;
+  right: 55%;
 }
 
 

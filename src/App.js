@@ -8,12 +8,14 @@ import Contact from "./pages/Contact";
 import Footer from "./pages/Footer";
 import Cart from "./pages/Cart";
 import ScrollToTop from "./pages/ScrollTotop";
+import ParralaxCover from "./pages/ParallaxCover";
 
 function App() {
   return (
     <BrowserRouter basename="/Star-Shop">
       <ScrollToTop />
       <Header />
+      <ParralaxCover />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
