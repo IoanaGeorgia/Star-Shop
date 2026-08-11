@@ -89,7 +89,6 @@ export default function Catalogue() {
 
     setIsSelected("");
     try {
-      // const name = 'vega';
       const response = await fetch(
         `https://api.api-ninjas.com/v1/stars?max_distance_light_year=10000`,
         {

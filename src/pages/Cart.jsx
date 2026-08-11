@@ -177,7 +177,7 @@ export default function Cart() {
           </div>
         </div>
 
-        <div className="payment-area">
+{   cartItems.length > 0 &&  <div className="payment-area">
           <p className="subtitle">Order details</p>
         <form onSubmit={handleSubmit} className="checkout-form" noValidate>
       <p>Billing Information</p>
@@ -323,7 +323,7 @@ export default function Cart() {
 
       <button type="submit" className="defaultSmallButton">Place Order</button>
     </form>
-        </div>
+        </div>}
       </div>
     </div>
   );

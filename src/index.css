@@ -1655,7 +1655,6 @@ footer .logo img {
 
 .cart .error.no-items {
   min-height: 100px;
-  text-align: center;
   padding: var(--defaultPadding);
   width: 100%;
 }

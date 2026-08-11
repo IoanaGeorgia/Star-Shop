@@ -38,7 +38,7 @@ export default function Header() {
             title="see your cart"
             aria-label="see your cart"
           >
-            ★{itemsInCart && <span>{itemsInCart}</span>}
+            ★{itemsInCart > 0 && <span>{itemsInCart}</span>}
           </button>
         </div>
       )}
@@ -68,7 +68,7 @@ export default function Header() {
               title="See your cart"
               aria-label="see your cart"
             >
-              ★ See cart {itemsInCart && <span>{itemsInCart}</span>}
+              ★ See cart {itemsInCart > 0 && <span>{itemsInCart}</span>}
             </button>
 
             <div className="logo" onClick={() => navigate("/")}>
