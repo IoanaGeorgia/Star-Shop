@@ -42,8 +42,7 @@ export default function Catalogue() {
     "Hercules",
     "Perseus",
     "Auriga",
-    "Andromeda",
-    "Boötes",
+    "Andromeda"
   ];
 
   const getSpectralImage = (spectralClass) => {
@@ -56,29 +55,27 @@ export default function Catalogue() {
     setError(false);
     setIsSelected(constellation);
     try {
-      const response = await fetch(
-        `https://api.api-ninjas.com/v1/stars?constellation=${constellation}`,
-        {
-          method: "GET",
-          headers: {
-            "X-Api-Key": "6oXjVCvrX7p3HCkLv/wttQ==GWagAeh4QbPVEqfk",
-            "Content-Type": "application/json",
-          },
-        },
-      );
+
+      const response = await fetch(`/api/stars/constellation?constellation=${encodeURIComponent(constellation)}`);
 
       if (!response.ok) {
         setError(true);
       }
 
       const data = await response.json();
-      if (data.length === 0) {
+      console.log(data)
+       if (data.data.length === 0) {
         setError(true);
+        setStars([])
       } else {
-        setStars(data);
+        setError(false)
+        console.log(data.data)
+        setStars(data.data);
+
       }
     } catch (error) {
       setError(true);
+      setStars([])
     }
     setLoading(false);
   }
@@ -89,29 +86,22 @@ export default function Catalogue() {
 
     setIsSelected("");
     try {
-      const response = await fetch(
-        `https://api.api-ninjas.com/v1/stars?max_distance_light_year=10000`,
-        {
-          method: "GET",
-          headers: {
-            "X-Api-Key": "6oXjVCvrX7p3HCkLv/wttQ==GWagAeh4QbPVEqfk",
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const response = await fetch("/api/stars");
 
       if (!response.ok) {
         setError(true);
       }
 
       const data = await response.json();
-      if (data.length === 0) {
+      if (data.data.length === 0) {
         setError(true);
+        setStars([])
       } else {
-        setStars(data);
-        console.log(data);
+        setError(false)
+        setStars(data.data);
       }
     } catch (error) {
+      setStars([])
       setError(true);
     }
 
@@ -125,6 +115,7 @@ export default function Catalogue() {
   return (
     <div className="catalogue" id="catalogue">
       <div className="decoration"></div>
+      <main>
       <div className="catalogue-wrapper-header">
         <p className="title secondary-title">
           Check out our selection of stars
@@ -136,7 +127,7 @@ export default function Catalogue() {
             onClick={() => fetchStars()}
             className={isSelected === "" ? "defaultSmallButton" : ""}
           >
-            See all
+            Top products
           </li>
           {constellations.length &&
             constellations.map((constellation) => (
@@ -190,6 +181,7 @@ export default function Catalogue() {
             ))}
         </div>
       </div>
+      </main>
     </div>
   );
 }

@@ -8,9 +8,11 @@ import classK from "../assets/AST_SC_K.png";
 import classM from "../assets/AST_SC_M.png";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart, deleteItemFromCart } from "../slices/cart";
+import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const cartItems = useSelector((state) => state.cart.items);
 
@@ -100,35 +102,75 @@ export default function Cart() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!validateForm()) {
-      return; 
+      return;
     }
 
+    let newErrors = {};
+
     const orderData = {
-      billing: {
+      // mock till we have more users and auth
+      userId: 1,
+      totalSum: cartItems.length * 20000,
+      billingAddress: {
         fullName: formData.fullName,
         email: formData.email,
         address: formData.address,
         city: formData.city,
         zip: formData.zip,
       },
-      shipping: formData.differentShipping
+      "items": cartItems.map((item) => ({
+        price: 20000,
+        quantity: item.count ?? 1,
+        starDetails: {
+          name: item.name,
+          constellation: item.constellation,
+          right_ascension: item.right_ascension,
+          declination: item.declination,
+          apparent_magnitude: item.apparent_magnitude,
+          absolute_magnitude: item.absolute_magnitude,
+          distance_light_year: item.distance_light_year,
+          spectral_class: item.spectral_class
+        }
+      })),
+      shippingAddress: formData.differentShipping
         ? {
-            fullName: formData.shippingFullName,
-            address: formData.shippingAddress,
-            city: formData.shippingCity,
-            zip: formData.shippingZip,
-          }
+          fullName: formData.shippingFullName,
+          address: formData.shippingAddress,
+          city: formData.shippingCity,
+          zip: formData.shippingZip,
+        }
         : {
-            fullName: formData.fullName,
-            address: formData.address,
-            city: formData.city,
-            zip: formData.zip,
-          },
+          fullName: formData.fullName,
+          address: formData.address,
+          city: formData.city,
+          zip: formData.zip,
+        },
     };
+
+    const response = await fetch(`/api/order`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    if (!response.ok) {
+      newErrors.form = "There was an error placing your order. Please try again.";
+      setErrors((prev) => ({ ...prev, ...newErrors }));
+      return;
+    }
+
+    const data = await response.json();
+    if (data.length > 0) {
+      // mock till we change UI for answer
+      alert("Order placed successfully!");
+    }
+
 
   };
 
@@ -139,7 +181,11 @@ export default function Cart() {
       <div className="cart-wrapper">
         <div className="item-area">
           <p className="subtitle">Your cart</p>
-
+          <div className="userAuth">
+            <button onClick={() => navigate("/login")}>Log in</button>
+            or
+            <button onClick={() => navigate("/register")}>Register</button>
+          </div>
           <div className="cart-items">
             {cartItems.length ? (
               cartItems.map((star, index) => (
@@ -177,152 +223,153 @@ export default function Cart() {
           </div>
         </div>
 
-{   cartItems.length > 0 &&  <div className="payment-area">
+        {cartItems.length > 0 && <div className="payment-area">
           <p className="subtitle">Order details</p>
-        <form onSubmit={handleSubmit} className="checkout-form" noValidate>
-      <p>Billing Information</p>
+          <form onSubmit={handleSubmit} className="checkout-form" noValidate>
+            <p>Billing Information</p>
 
-      <div>
-        <label htmlFor="fullName">Full name</label>
-        <input
-          type="text"
-          id="fullName"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-        />
-        {errors.fullName && <p className="error">{errors.fullName}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <p className="error">{errors.email}</p>}
-      </div>
-
-      <div>
-        <label htmlFor="address">Billing Address</label>
-        <input
-          type="text"
-          id="address"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-        />
-        {errors.address && <p className="error">{errors.address}</p>}
-      </div>
-
-     
-        <div>
-          <label htmlFor="city">City</label>
-          <input
-            type="text"
-            id="city"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-          />
-          {errors.city && <p className="error">{errors.city}</p>}
-        </div>
-
-        <div>
-          <label htmlFor="zip">ZIP Code</label>
-          <input
-            type="text"
-            id="zip"
-            name="zip"
-            value={formData.zip}
-            onChange={handleChange}
-          />
-          {errors.zip && <p className="error">{errors.zip}</p>}
-        </div>
-     
-
-<div className="checkbox-field">
-  <label className="custom-checkbox">
-    <input
-      type="checkbox"
-      name="differentShipping"
-      checked={formData.differentShipping}
-      onChange={handleChange}
-    />
-    <span className="checkmark"></span>
-    Ship to a different address
-  </label>
-</div>
-
-      {formData.differentShipping && (
-        <div className="shipping-section">
-          <p>Shipping Information</p>
-
-          <div>
-            <label htmlFor="shippingFullName">Recipient Name</label>
-            <input
-              type="text"
-              id="shippingFullName"
-              name="shippingFullName"
-              value={formData.shippingFullName}
-              onChange={handleChange}
-            />
-            {errors.shippingFullName && (
-              <p className="error">{errors.shippingFullName}</p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="shippingAddress">Shipping Address</label>
-            <input
-              type="text"
-              id="shippingAddress"
-              name="shippingAddress"
-              value={formData.shippingAddress}
-              onChange={handleChange}
-            />
-            {errors.shippingAddress && (
-              <p className="error">{errors.shippingAddress}</p>
-            )}
-          </div>
-
-          <div className="form-row">
             <div>
-              <label htmlFor="shippingCity">City</label>
+              <label htmlFor="fullName">Full name</label>
               <input
                 type="text"
-                id="shippingCity"
-                name="shippingCity"
-                value={formData.shippingCity}
+                id="fullName"
+                name="fullName"
+                value={formData.fullName}
                 onChange={handleChange}
               />
-              {errors.shippingCity && (
-                <p className="error">{errors.shippingCity}</p>
-              )}
+              {errors.fullName && <p className="error">{errors.fullName}</p>}
             </div>
 
             <div>
-              <label htmlFor="shippingZip">ZIP Code</label>
+              <label htmlFor="email">Email</label>
               <input
-                type="text"
-                id="shippingZip"
-                name="shippingZip"
-                value={formData.shippingZip}
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
               />
-              {errors.shippingZip && (
-                <p className="error">{errors.shippingZip}</p>
-              )}
+              {errors.email && <p className="error">{errors.email}</p>}
             </div>
-          </div>
-        </div>
-      )}
 
-      <button type="submit" className="defaultSmallButton">Place Order</button>
-    </form>
+            <div>
+              <label htmlFor="address">Billing Address</label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                value={formData.address}
+                onChange={handleChange}
+              />
+              {errors.address && <p className="error">{errors.address}</p>}
+            </div>
+
+
+            <div>
+              <label htmlFor="city">City</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                value={formData.city}
+                onChange={handleChange}
+              />
+              {errors.city && <p className="error">{errors.city}</p>}
+            </div>
+
+            <div>
+              <label htmlFor="zip">ZIP Code</label>
+              <input
+                type="text"
+                id="zip"
+                name="zip"
+                value={formData.zip}
+                onChange={handleChange}
+              />
+              {errors.zip && <p className="error">{errors.zip}</p>}
+            </div>
+
+
+            <div className="checkbox-field">
+              <label className="custom-checkbox">
+                <input
+                  type="checkbox"
+                  name="differentShipping"
+                  checked={formData.differentShipping}
+                  onChange={handleChange}
+                />
+                <span className="checkmark"></span>
+                Ship to a different address
+              </label>
+            </div>
+
+            {formData.differentShipping && (
+              <div className="shipping-section">
+                <p>Shipping Information</p>
+
+                <div>
+                  <label htmlFor="shippingFullName">Recipient Name</label>
+                  <input
+                    type="text"
+                    id="shippingFullName"
+                    name="shippingFullName"
+                    value={formData.shippingFullName}
+                    onChange={handleChange}
+                  />
+                  {errors.shippingFullName && (
+                    <p className="error">{errors.shippingFullName}</p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor="shippingAddress">Shipping Address</label>
+                  <input
+                    type="text"
+                    id="shippingAddress"
+                    name="shippingAddress"
+                    value={formData.shippingAddress}
+                    onChange={handleChange}
+                  />
+                  {errors.shippingAddress && (
+                    <p className="error">{errors.shippingAddress}</p>
+                  )}
+                </div>
+
+                <div className="form-row">
+                  <div>
+                    <label htmlFor="shippingCity">City</label>
+                    <input
+                      type="text"
+                      id="shippingCity"
+                      name="shippingCity"
+                      value={formData.shippingCity}
+                      onChange={handleChange}
+                    />
+                    {errors.shippingCity && (
+                      <p className="error">{errors.shippingCity}</p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label htmlFor="shippingZip">ZIP Code</label>
+                    <input
+                      type="text"
+                      id="shippingZip"
+                      name="shippingZip"
+                      value={formData.shippingZip}
+                      onChange={handleChange}
+                    />
+                    {errors.shippingZip && (
+                      <p className="error">{errors.shippingZip}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <button type="submit" className="defaultSmallButton">Place Order</button>
+            {errors.form && <p className="error">{errors.form}</p>}
+          </form>
         </div>}
       </div>
     </div>

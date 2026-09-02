@@ -72,13 +72,20 @@ button {
   }
 }
 
+.userAuth button{
+  background-color: transparent;
+  border:none;
+  outline:none;
+}
+
 a,
-a:visited {
+a:visited, .userAuth button {
   color: var(--defaultText);
   text-decoration: none;
   display: block;
   text-shadow: var(--defaultTextShadow);
   transition: var(--defaultTransition);
+  font-size:var(--smallFontSize)
 }
 
 a:hover,
@@ -190,6 +197,10 @@ textarea:focus {
   ;
 }
 
+.cart input,
+.cart textarea{
+  padding:10px;
+}
 
 .custom-checkbox {
   display: flex;
@@ -905,6 +916,10 @@ footer .logo img {
   text-shadow: none;
 }
 
+.landing .contact-area .contact-info a:hover{
+  text-shadow: var(--defaultTextShadow);
+}
+
 .about {
   background-color: black;
   min-height: 100vh;
@@ -920,6 +935,7 @@ footer .logo img {
 
 .about main {
   position: relative;
+  z-index:2;
 }
 
 .about .subtitle {
@@ -968,6 +984,7 @@ footer .logo img {
 .about-section .founder .name {
   margin-top: 10px;
   text-align: center;
+  text-shadow: none;
 }
 
 .about-section .founder {
@@ -1089,6 +1106,11 @@ footer .logo img {
   min-height: calc(100vh - 5rem);
 }
 
+#catalogue main{
+  position: relative;
+  z-index:2;
+}
+
 #catalogue .catalogue-wrapper {
   margin: auto;
   max-width: 80%;
@@ -1176,9 +1198,9 @@ footer .logo img {
   padding-bottom: 1.5rem;
   border: 2px solid var(--cardBorder);
   border-bottom: none;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-radius: 10px;
   backdrop-filter: var(--backdropFilter);
+  height: 100%;
 }
 
 
@@ -1281,11 +1303,11 @@ footer .logo img {
 
 .star-area .errorData {
   width: 100%;
-  min-height: 100vh;
+  min-height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: red;
 }
 
@@ -1471,18 +1493,19 @@ footer .logo img {
 
 
 
-.contact {
+.contact, .login, .register {
   min-height: 100vh;
   padding-top: var(--headerHeight);
 }
 
-.contact .contact-wrapper {
+.contact .contact-wrapper, .login .login-wrapper, .register .register-wrapper {
   position: relative;
   padding: var(--defaultPadding);
   padding-top: calc(var(--headerHeight)+225px);
   display: flex;
   flex-direction: column;
   gap: var(--defaultPadding);
+  z-index:2;
 }
 
 
@@ -1490,7 +1513,11 @@ footer .logo img {
   text-shadow: none;
 }
 
-.contact .title {
+.contact .contact-wrapper .card a:hover{
+  text-shadow: var(--defaultTextShadow);
+}
+
+.contact .title, .login .title, .register .title {
   text-align: center;
   margin: auto;
   margin-top: var(--defaultPadding);
@@ -1512,10 +1539,18 @@ footer .logo img {
 }
 
 .contact .card {
-  max-width: var(--defaultContainerWidth);
+  max-width:700px;
   margin: auto;
   padding: var(--defaultPadding);
   width: 100%;
+}
+
+.contact .card div:last-of-type{
+    color: var(--defaultText);
+    text-decoration: none;
+    display: block;
+    font-size: var(--smallFontSize);
+    margin-top:5px;
 }
 
 .contact form {
@@ -1534,17 +1569,26 @@ footer .logo img {
 
 
 
-.contact button.defaultSmallButton {
+.contact button.defaultSmallButton, .login button.defaultSmallButton, .register button.defaultSmallButton {
   padding: 15px 144px;
   max-width: fit-content;
   margin: auto;
-  margin-top: var(--headerHeight)
+  margin-top: var(--headerHeight);
+  transition:var(--defaultTransition)
 }
 
-.contact form .error {
+ .login button.defaultSmallButton, .register button.defaultSmallButton{
+  margin-top: 0px;
+ }
+
+form .error {
   font-size: var(--smallFontSize);
-  margin-top: 15px;
+  margin-top: 0px;
   color: rgba(255, 0, 0, 0.842);
+}
+
+.contact form .error{
+  margin-bottom: 15px;
 }
 
 @media(max-width:516px) {
@@ -1574,6 +1618,7 @@ footer .logo img {
   margin: auto;
   display: flex;
   gap: var(--defaultPadding);
+  z-index:99;
 }
 
 .cart .item-area {
@@ -1669,7 +1714,7 @@ footer .logo img {
 .payment-area form {
   display: flex;
   flex-direction: column;
-  gap: var(--defaultPadding);
+  gap: 15px;
   padding-top: var(--defaultPadding)
 }
 
@@ -1685,6 +1730,7 @@ footer .logo img {
 
 .payment-area .defaultSmallButton {
   min-height: 53px;
+  margin-top:15px;
 }
 
 .payment-area .error {
@@ -1724,4 +1770,53 @@ footer .logo img {
   }
 
 
+}
+
+.userAuth{
+  font-size: var(--smallFontSize);
+  color: var(--defaultText);
+  display: flex;
+  gap:5px;
+  margin-top:var(--defaultPadding);
+}
+
+.login{
+  min-height: 100vh;
+  padding-top: var(--headerHeight);
+}
+
+.login-wrapper{
+  position: relative;
+    padding: var(--defaultPadding);
+    padding-top: calc(var(--headerHeight) +225px);
+    display: flex;
+    flex-direction: column;
+    gap: var(--defaultPadding);
+    z-index: 2;
+}
+
+.login form, .register form{
+  max-width:700px;
+  width:100%;
+  padding: var(--defaultPadding);
+  border-radius: 10px;
+  backdrop-filter: var(--backdropFilter);
+  display: flex;
+  flex-direction: column;
+  gap: var(--defaultPadding);
+  margin:auto;
+}
+
+.login form > div, .register form > div{
+  display: flex;
+  flex-direction: column;
+  gap: var(--defaultSmallPadding);  
+}
+
+.success{
+  max-width:700px;
+  padding:var(--defaultPadding);
+  margin:auto;
+  font-size: 1.2rem;
+  text-align: center;
 }

@@ -80,7 +80,7 @@ export default function Contact() {
 
         <div className="form-wrapper">
           <p className="subtitle">Have anything to share with us?</p>
-          <p className="subtitle">Leave us a message below:</p>
+          <p className="subtitle">Leave a message below:</p>
 
           <form>
             <label>Name</label>
@@ -90,6 +90,7 @@ export default function Contact() {
               value={data.name}
               onChange={handleInput}
                 maxLength="255"
+                placeholder="Your name"
             />
             {errors.name &&
               errors.name.map((error, i) => (
@@ -105,6 +106,7 @@ export default function Contact() {
               value={data.email}
               onChange={handleInput}
               maxLength="255"
+              placeholder="Your email address"
             />
             {errors.email &&
               errors.email.map((error, i) => (
@@ -119,6 +121,7 @@ export default function Contact() {
               value={data.message}
               onChange={handleInput}
               maxLength="1000"
+              placeholder="Your message for us"
             />
             {errors.message &&
               errors.message.map((error, i) => (

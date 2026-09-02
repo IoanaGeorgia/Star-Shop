@@ -2,9 +2,12 @@ import logo from "../assets/logo.png";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+
 export default function Header() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const user = useSelector((state) => state.auth.user);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,6 +23,12 @@ export default function Header() {
         <img src={logo}></img>
         <span>StellSi</span>
       </div>
+
+      {user && (
+        <div className="user-info">
+          <span>Welcome, {user.username}</span>
+        </div>
+      )}
 
       {!isMobile && (
         <div className="nav-buttons">
