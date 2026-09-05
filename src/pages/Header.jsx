@@ -17,6 +17,11 @@ export default function Header() {
     setIsMobile(false);
   }, [location.pathname]);
 
+  function formatUsername(username) {
+    if (!username) return "";
+    return username.charAt(0).toUpperCase();
+  }
+
   return (
     <div className="header">
       <div className="logo" onClick={() => navigate("/")}>
@@ -24,11 +29,6 @@ export default function Header() {
         <span>StellSi</span>
       </div>
 
-      {user && (
-        <div className="user-info">
-          <span>Welcome, {user.username}</span>
-        </div>
-      )}
 
       {!isMobile && (
         <div className="nav-buttons">
@@ -36,7 +36,6 @@ export default function Header() {
           <button onClick={() => navigate("/contact")}>Contact</button>
           <button
             onClick={() => navigate("/catalogue")}
-            className="defaultSmallButton"
           >
             Catalogue
           </button>
@@ -47,8 +46,21 @@ export default function Header() {
             title="see your cart"
             aria-label="see your cart"
           >
-            ★{itemsInCart > 0 && <span>{itemsInCart}</span>}
+            See cart{itemsInCart > 0 && <span>{itemsInCart}</span>}
           </button>
+
+          {user ? (
+            <button onClick={() => navigate("/user")} title="view your profile" aria-label="view your profile" className="user-info">
+              <span>Hi, {formatUsername(user.username)}</span>
+            </button>
+          ) : <button
+            onClick={() => navigate("/register")}
+            title="register or login"
+            aria-label="redirect to login page"
+                className="defaultSmallButton"
+          >
+            Login
+          </button>}
         </div>
       )}
 
@@ -66,7 +78,6 @@ export default function Header() {
             <button onClick={() => navigate("/contact")}>Contact</button>
             <button
               onClick={() => navigate("/catalogue")}
-              className="defaultSmallButton"
             >
               Catalogue
             </button>
@@ -77,8 +88,22 @@ export default function Header() {
               title="See your cart"
               aria-label="see your cart"
             >
-              ★ See cart {itemsInCart > 0 && <span>{itemsInCart}</span>}
+              See cart {itemsInCart > 0 && <span>{itemsInCart}</span>}
             </button>
+
+
+            {user ? (
+              <button onClick={() => navigate("/user")} title="view your profile" aria-label="view your profile" className="user-info">
+                <span>See your account</span>
+              </button>
+            ) : <button
+              onClick={() => navigate("/register")}
+              title="register or login"
+              aria-label="redirect to login page"
+                            className="defaultSmallButton"
+            >
+              Login or register
+            </button>}
 
             <div className="logo" onClick={() => navigate("/")}>
               <img src={logo}></img>

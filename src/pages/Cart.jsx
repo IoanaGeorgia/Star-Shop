@@ -7,14 +7,21 @@ import classG from "../assets/AST_SC_G.png";
 import classK from "../assets/AST_SC_K.png";
 import classM from "../assets/AST_SC_M.png";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart, deleteItemFromCart } from "../slices/cart";
+import { addToCart, removeFromCart, deleteItemFromCart, emptyCart } from "../slices/cart";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
+import Error from "./Error";
 
 export default function Cart() {
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const cartItems = useSelector((state) => state.cart.items);
+  const user = useSelector((state) => state.auth.user);
+
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
 
   useEffect(() => {
     localStorage.setItem("cart_items", JSON.stringify(cartItems));
@@ -112,8 +119,7 @@ export default function Cart() {
     let newErrors = {};
 
     const orderData = {
-      // mock till we have more users and auth
-      userId: 1,
+      userId: user.id,
       totalSum: cartItems.length * 20000,
       billingAddress: {
         fullName: formData.fullName,
@@ -151,6 +157,7 @@ export default function Cart() {
         },
     };
 
+    setLoading(true);
     const response = await fetch(`/api/order`, {
       method: 'POST',
       headers: {
@@ -162,215 +169,229 @@ export default function Cart() {
     if (!response.ok) {
       newErrors.form = "There was an error placing your order. Please try again.";
       setErrors((prev) => ({ ...prev, ...newErrors }));
+      setLoading(false)
       return;
     }
 
     const data = await response.json();
-    if (data.length > 0) {
-      // mock till we change UI for answer
-      alert("Order placed successfully!");
+    if (data.error) {
+      newErrors.form = "A server error has occured.";
+      setErrors((prev) => ({ ...prev, ...newErrors }));
+      setLoading(false)
     }
 
-
+    setSuccess(true);
+    setLoading(false)
+    dispatch(emptyCart());
   };
 
   return (
     <div className="cart">
       <div className="decoration secondary-decoration"></div>
 
+
       <div className="cart-wrapper">
-        <div className="item-area">
-          <p className="subtitle">Your cart</p>
-          <div className="userAuth">
-            <button onClick={() => navigate("/login")}>Log in</button>
-            or
-            <button onClick={() => navigate("/register")}>Register</button>
-          </div>
-          <div className="cart-items">
-            {cartItems.length ? (
-              cartItems.map((star, index) => (
-                <div className="card" key={star.id || star.name || index}>
-                  <div>
-                    <img
-                      src={getSpectralImage(star.spectral_class)}
-                      alt={star.name || "Star"}
-                    />
-                    <span>{star.name}</span>
-                  </div>
-                  <div className="actions">
-                    <div className="changeCount">
-                      <button onClick={() => dispatch(addToCart(star))}>
-                        +
-                      </button>
-                      <div>{star.count ?? 1}</div>
-                      <button onClick={() => dispatch(removeFromCart(star))}>
-                        -
-                      </button>
-                    </div>
+        <p className="title">Your cart</p>
 
-                    <button
-                      className="delete"
-                      onClick={() => dispatch(deleteItemFromCart(star))}
-                    >
-                      ×
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="error no-items">No items in cart</div>
-            )}
-          </div>
-        </div>
+        {loading ? <Loading />
+          : <>{errors.form ? <Error /> :
+            <div className="cart-inner-wrapper">
+              <div className="item-area">
 
-        {cartItems.length > 0 && <div className="payment-area">
-          <p className="subtitle">Order details</p>
-          <form onSubmit={handleSubmit} className="checkout-form" noValidate>
-            <p>Billing Information</p>
+                {!user ?? <div className="userAuth">
+                  <button onClick={() => navigate("/login")}>Log in</button>
+                  or
+                  <button onClick={() => navigate("/register")}>Register</button>
+                </div>}
+                <div className="cart-items">
+                  {cartItems.length ? (
+                    cartItems.map((star, index) => (
+                      <div className="card" key={star.id || star.name || index}>
+                        <div>
+                          <img
+                            src={getSpectralImage(star.spectral_class)}
+                            alt={star.name || "Star"}
+                          />
+                          <span>{star.name}</span>
+                        </div>
+                        <div className="actions">
+                          <div className="changeCount">
+                            <button onClick={() => dispatch(addToCart(star))}>
+                              +
+                            </button>
+                            <div>{star.count ?? 1}</div>
+                            <button onClick={() => dispatch(removeFromCart(star))}>
+                              -
+                            </button>
+                          </div>
 
-            <div>
-              <label htmlFor="fullName">Full name</label>
-              <input
-                type="text"
-                id="fullName"
-                name="fullName"
-                value={formData.fullName}
-                onChange={handleChange}
-              />
-              {errors.fullName && <p className="error">{errors.fullName}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-              />
-              {errors.email && <p className="error">{errors.email}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="address">Billing Address</label>
-              <input
-                type="text"
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-              />
-              {errors.address && <p className="error">{errors.address}</p>}
-            </div>
-
-
-            <div>
-              <label htmlFor="city">City</label>
-              <input
-                type="text"
-                id="city"
-                name="city"
-                value={formData.city}
-                onChange={handleChange}
-              />
-              {errors.city && <p className="error">{errors.city}</p>}
-            </div>
-
-            <div>
-              <label htmlFor="zip">ZIP Code</label>
-              <input
-                type="text"
-                id="zip"
-                name="zip"
-                value={formData.zip}
-                onChange={handleChange}
-              />
-              {errors.zip && <p className="error">{errors.zip}</p>}
-            </div>
-
-
-            <div className="checkbox-field">
-              <label className="custom-checkbox">
-                <input
-                  type="checkbox"
-                  name="differentShipping"
-                  checked={formData.differentShipping}
-                  onChange={handleChange}
-                />
-                <span className="checkmark"></span>
-                Ship to a different address
-              </label>
-            </div>
-
-            {formData.differentShipping && (
-              <div className="shipping-section">
-                <p>Shipping Information</p>
-
-                <div>
-                  <label htmlFor="shippingFullName">Recipient Name</label>
-                  <input
-                    type="text"
-                    id="shippingFullName"
-                    name="shippingFullName"
-                    value={formData.shippingFullName}
-                    onChange={handleChange}
-                  />
-                  {errors.shippingFullName && (
-                    <p className="error">{errors.shippingFullName}</p>
+                          <button
+                            className="delete"
+                            onClick={() => dispatch(deleteItemFromCart(star))}
+                          >
+                            ×
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="error no-items">No items in cart</div>
                   )}
-                </div>
-
-                <div>
-                  <label htmlFor="shippingAddress">Shipping Address</label>
-                  <input
-                    type="text"
-                    id="shippingAddress"
-                    name="shippingAddress"
-                    value={formData.shippingAddress}
-                    onChange={handleChange}
-                  />
-                  {errors.shippingAddress && (
-                    <p className="error">{errors.shippingAddress}</p>
-                  )}
-                </div>
-
-                <div className="form-row">
-                  <div>
-                    <label htmlFor="shippingCity">City</label>
-                    <input
-                      type="text"
-                      id="shippingCity"
-                      name="shippingCity"
-                      value={formData.shippingCity}
-                      onChange={handleChange}
-                    />
-                    {errors.shippingCity && (
-                      <p className="error">{errors.shippingCity}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label htmlFor="shippingZip">ZIP Code</label>
-                    <input
-                      type="text"
-                      id="shippingZip"
-                      name="shippingZip"
-                      value={formData.shippingZip}
-                      onChange={handleChange}
-                    />
-                    {errors.shippingZip && (
-                      <p className="error">{errors.shippingZip}</p>
-                    )}
-                  </div>
                 </div>
               </div>
-            )}
 
-            <button type="submit" className="defaultSmallButton">Place Order</button>
-            {errors.form && <p className="error">{errors.form}</p>}
-          </form>
-        </div>}
+              {cartItems.length > 0 && <div className="payment-area">
+                <p className="subtitle">Order details</p>
+                <form onSubmit={handleSubmit} className="checkout-form" noValidate>
+                  <p>Billing Information</p>
+
+                  <div>
+                    <label htmlFor="fullName">Full name</label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                    />
+                    {errors.fullName && <p className="error">{errors.fullName}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="email">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                    {errors.email && <p className="error">{errors.email}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="address">Billing Address</label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                    />
+                    {errors.address && <p className="error">{errors.address}</p>}
+                  </div>
+
+
+                  <div>
+                    <label htmlFor="city">City</label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                    />
+                    {errors.city && <p className="error">{errors.city}</p>}
+                  </div>
+
+                  <div>
+                    <label htmlFor="zip">ZIP Code</label>
+                    <input
+                      type="text"
+                      id="zip"
+                      name="zip"
+                      value={formData.zip}
+                      onChange={handleChange}
+                    />
+                    {errors.zip && <p className="error">{errors.zip}</p>}
+                  </div>
+
+
+                  <div className="checkbox-field">
+                    <label className="custom-checkbox">
+                      <input
+                        type="checkbox"
+                        name="differentShipping"
+                        checked={formData.differentShipping}
+                        onChange={handleChange}
+                      />
+                      <span className="checkmark"></span>
+                      Ship to a different address
+                    </label>
+                  </div>
+
+                  {formData.differentShipping && (
+                    <div className="shipping-section">
+                      <p>Shipping Information</p>
+
+                      <div>
+                        <label htmlFor="shippingFullName">Recipient Name</label>
+                        <input
+                          type="text"
+                          id="shippingFullName"
+                          name="shippingFullName"
+                          value={formData.shippingFullName}
+                          onChange={handleChange}
+                        />
+                        {errors.shippingFullName && (
+                          <p className="error">{errors.shippingFullName}</p>
+                        )}
+                      </div>
+
+                      <div>
+                        <label htmlFor="shippingAddress">Shipping Address</label>
+                        <input
+                          type="text"
+                          id="shippingAddress"
+                          name="shippingAddress"
+                          value={formData.shippingAddress}
+                          onChange={handleChange}
+                        />
+                        {errors.shippingAddress && (
+                          <p className="error">{errors.shippingAddress}</p>
+                        )}
+                      </div>
+
+                      <div className="form-row">
+                        <div>
+                          <label htmlFor="shippingCity">City</label>
+                          <input
+                            type="text"
+                            id="shippingCity"
+                            name="shippingCity"
+                            value={formData.shippingCity}
+                            onChange={handleChange}
+                          />
+                          {errors.shippingCity && (
+                            <p className="error">{errors.shippingCity}</p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label htmlFor="shippingZip">ZIP Code</label>
+                          <input
+                            type="text"
+                            id="shippingZip"
+                            name="shippingZip"
+                            value={formData.shippingZip}
+                            onChange={handleChange}
+                          />
+                          {errors.shippingZip && (
+                            <p className="error">{errors.shippingZip}</p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  <button type="submit" className="defaultSmallButton">Place Order</button>
+                  {errors.form && <p className="error">{errors.form}</p>}
+                </form>
+              </div>}
+
+            </div>} </>
+        }
+
       </div>
     </div>
   );

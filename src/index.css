@@ -72,20 +72,21 @@ button {
   }
 }
 
-.userAuth button{
+.userAuth button {
   background-color: transparent;
-  border:none;
-  outline:none;
+  border: none;
+  outline: none;
 }
 
 a,
-a:visited, .userAuth button {
+a:visited,
+.userAuth button {
   color: var(--defaultText);
   text-decoration: none;
   display: block;
   text-shadow: var(--defaultTextShadow);
   transition: var(--defaultTransition);
-  font-size:var(--smallFontSize)
+  font-size: var(--smallFontSize)
 }
 
 a:hover,
@@ -96,7 +97,7 @@ a:focus {
 
 #landingPage {
   position: relative;
-  z-index:3;
+  z-index: 3;
 }
 
 .decoration {
@@ -124,24 +125,25 @@ a:focus {
 
 }
 
-.decoration-par{
-    width: 100%;
+.decoration-par {
+  width: 100%;
   min-height: 100vh;
   position: fixed;
   top: 0px;
   left: 0px;
   height: 100%;
   background-color: transparent;
-  z-index:1;
+  z-index: 1;
   pointer-events: none;
 }
 
-.decoration-par img{
-  width:40px;
+.decoration-par img {
+  width: 40px;
   position: absolute;
   will-change: transform;
-  
+
 }
+
 .decoration-par img.first {
   width: 40px;
   top: 15%;
@@ -198,8 +200,8 @@ textarea:focus {
 }
 
 .cart input,
-.cart textarea{
-  padding:10px;
+.cart textarea {
+  padding: 10px;
 }
 
 .custom-checkbox {
@@ -516,6 +518,7 @@ button.default-glow:hover {
   align-items: center;
   gap: calc(2 * var(--defaultPadding));
   min-height: 100vh;
+  padding-bottom: var(--defaultPadding);
 }
 
 
@@ -652,7 +655,7 @@ button.default-glow:hover {
 
 .header .nav-buttons {
   display: flex;
-  gap: 40px;
+  gap: 10px;
   align-items: center;
 
 }
@@ -662,7 +665,7 @@ button.default-glow:hover {
   background-color: transparent;
   color: var(--defaultText);
   border: 2px solid transparent;
-  padding: 6px 24px;
+  padding: 6px 15px;
   font-size: var(--smallFontSize);
   letter-spacing: 1px;
   border-radius: 8px;
@@ -672,23 +675,21 @@ button.default-glow:hover {
   backdrop-filter: blur(2px);
   cursor: pointer;
   transition: var(--defaultTransition);
-    height:min-content;
+  height: min-content;
 }
 
 .header .nav-buttons button.headerCart {
-  font-size: 2rem;
-  padding: 0px 0px;
   position: relative;
 }
 
 .header .nav-buttons button.headerCart span {
   position: absolute;
-  top: 0px;
-  right: -10px;
-  min-width: 25px;
-  height: 25px;
-  padding: 3px;
-  border-radius: 50%;
+  top: -5px;
+  left: 80%;
+  min-width: 20px;
+  height: 20px;
+  padding: 3px 5px;
+  border-radius: 50px;
   font-size: 11px;
   border: 2px solid var(--defaultText);
   background-color: var(--darkTransparentBg);
@@ -698,28 +699,31 @@ button.default-glow:hover {
   z-index: 20;
 }
 
-.header .nav-buttons button.headerCart:hover {
-  border: 2px solid transparent;
-  box-shadow: none;
-}
 
 .header .mobileToggle {
   display: none;
 }
 
-@media(max-width:693px) {
+@media(max-width:900px) {
   .header {
-    padding: 0 2rem;
+    padding: 0 3rem;
   }
 }
 
 @media(max-width:764px) {
   .header .nav-buttons {
-    gap: 20px;
+    gap: 5px;
   }
 }
 
-@media(max-width:590px) {
+@media(max-width:693px) {
+  .header {
+    padding: 0 1rem;
+  }
+}
+
+
+@media(max-width:629px) {
   .header .nav-buttons {
     display: none;
   }
@@ -851,7 +855,7 @@ footer .logo img {
   backdrop-filter: blur(2px);
   cursor: pointer;
   transition: var(--defaultTransition);
-  height:min-content;
+  height: min-content;
 }
 
 @media(max-width:590px) {
@@ -916,7 +920,7 @@ footer .logo img {
   text-shadow: none;
 }
 
-.landing .contact-area .contact-info a:hover{
+.landing .contact-area .contact-info a:hover {
   text-shadow: var(--defaultTextShadow);
 }
 
@@ -935,7 +939,7 @@ footer .logo img {
 
 .about main {
   position: relative;
-  z-index:2;
+  z-index: 2;
 }
 
 .about .subtitle {
@@ -1106,9 +1110,9 @@ footer .logo img {
   min-height: calc(100vh - 5rem);
 }
 
-#catalogue main{
+#catalogue main {
   position: relative;
-  z-index:2;
+  z-index: 2;
 }
 
 #catalogue .catalogue-wrapper {
@@ -1280,7 +1284,9 @@ footer .logo img {
   align-items: center;
   justify-content: center;
   gap: 12px;
+  min-height: 200px;
 }
+
 
 .loader {
   width: 40px;
@@ -1301,9 +1307,9 @@ footer .logo img {
   }
 }
 
-.star-area .errorData {
+.errorData {
   width: 100%;
-  min-height: 10vh;
+  min-height: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1311,8 +1317,7 @@ footer .logo img {
   color: red;
 }
 
-
-.star-area .errorData p {
+.errorData p {
   max-width: 70%;
   text-align: center;
 }
@@ -1493,19 +1498,19 @@ footer .logo img {
 
 
 
-.contact, .login, .register {
+.side {
   min-height: 100vh;
   padding-top: var(--headerHeight);
 }
 
-.contact .contact-wrapper, .login .login-wrapper, .register .register-wrapper {
+.side-wrapper {
   position: relative;
   padding: var(--defaultPadding);
   padding-top: calc(var(--headerHeight)+225px);
   display: flex;
   flex-direction: column;
   gap: var(--defaultPadding);
-  z-index:2;
+  z-index: 2;
 }
 
 
@@ -1513,11 +1518,11 @@ footer .logo img {
   text-shadow: none;
 }
 
-.contact .contact-wrapper .card a:hover{
+.contact .contact-wrapper .card a:hover {
   text-shadow: var(--defaultTextShadow);
 }
 
-.contact .title, .login .title, .register .title {
+.side .title {
   text-align: center;
   margin: auto;
   margin-top: var(--defaultPadding);
@@ -1539,18 +1544,18 @@ footer .logo img {
 }
 
 .contact .card {
-  max-width:700px;
+  max-width: 700px;
   margin: auto;
   padding: var(--defaultPadding);
   width: 100%;
 }
 
-.contact .card div:last-of-type{
-    color: var(--defaultText);
-    text-decoration: none;
-    display: block;
-    font-size: var(--smallFontSize);
-    margin-top:5px;
+.contact .card div:last-of-type {
+  color: var(--defaultText);
+  text-decoration: none;
+  display: block;
+  font-size: var(--smallFontSize);
+  margin-top: 5px;
 }
 
 .contact form {
@@ -1569,17 +1574,18 @@ footer .logo img {
 
 
 
-.contact button.defaultSmallButton, .login button.defaultSmallButton, .register button.defaultSmallButton {
+.side button.defaultSmallButton {
   padding: 15px 144px;
   max-width: fit-content;
   margin: auto;
   margin-top: var(--headerHeight);
-  transition:var(--defaultTransition)
+  transition: var(--defaultTransition)
 }
 
- .login button.defaultSmallButton, .register button.defaultSmallButton{
+.login button.defaultSmallButton,
+.register button.defaultSmallButton {
   margin-top: 0px;
- }
+}
 
 form .error {
   font-size: var(--smallFontSize);
@@ -1587,8 +1593,8 @@ form .error {
   color: rgba(255, 0, 0, 0.842);
 }
 
-.contact form .error{
-  margin-bottom: 15px;
+.contact form .error {
+  margin-top: 15px;
 }
 
 @media(max-width:516px) {
@@ -1610,15 +1616,22 @@ form .error {
 }
 
 .cart-wrapper {
-  position: relative;
-  padding: var(--defaultPadding);
   padding-top: var(--headerHeight);
   max-width: var(--defaultContainerWidth);
   width: 100%;
   margin: auto;
+  z-index: 99;
+  position: relative;
+}
+
+.cart-wrapper p.title {
+  text-align: center;
+}
+
+.cart-inner-wrapper {
   display: flex;
   gap: var(--defaultPadding);
-  z-index:99;
+  padding: var(--defaultPadding);
 }
 
 .cart .item-area {
@@ -1730,7 +1743,7 @@ form .error {
 
 .payment-area .defaultSmallButton {
   min-height: 53px;
-  margin-top:15px;
+  margin-top: 15px;
 }
 
 .payment-area .error {
@@ -1772,51 +1785,102 @@ form .error {
 
 }
 
-.userAuth{
+.userAuth {
   font-size: var(--smallFontSize);
   color: var(--defaultText);
   display: flex;
-  gap:5px;
-  margin-top:var(--defaultPadding);
+  gap: 5px;
+  margin-top: var(--defaultPadding);
 }
 
-.login{
+.side {
   min-height: 100vh;
   padding-top: var(--headerHeight);
 }
 
-.login-wrapper{
+.side-wrapper {
   position: relative;
-    padding: var(--defaultPadding);
-    padding-top: calc(var(--headerHeight) +225px);
-    display: flex;
-    flex-direction: column;
-    gap: var(--defaultPadding);
-    z-index: 2;
+  padding: var(--defaultPadding);
+  padding-top: calc(var(--headerHeight) +225px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--defaultPadding);
+  z-index: 2;
 }
 
-.login form, .register form{
-  max-width:700px;
-  width:100%;
+.login form,
+.register form {
+  max-width: 700px;
+  width: 100%;
   padding: var(--defaultPadding);
   border-radius: 10px;
   backdrop-filter: var(--backdropFilter);
   display: flex;
   flex-direction: column;
   gap: var(--defaultPadding);
-  margin:auto;
+  margin: auto;
 }
 
-.login form > div, .register form > div{
+.login form>div,
+.register form>div {
   display: flex;
   flex-direction: column;
-  gap: var(--defaultSmallPadding);  
+  gap: var(--defaultSmallPadding);
 }
 
-.success{
-  max-width:700px;
-  padding:var(--defaultPadding);
-  margin:auto;
+.success {
+  max-width: 700px;
+  padding: var(--defaultPadding);
+  margin: auto;
   font-size: 1.2rem;
   text-align: center;
+}
+
+.user .title,
+.loading-page .title {
+  font-size: 1.2rem;
+}
+
+
+.user .wrapper p,
+.user .orders-wrapper p {
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.user .user-history .subtitle {
+  margin-bottom: 15px;
+}
+
+.user .order {
+  backdrop-filter: var(--backdropFilter);
+  border: var(--cardBorderStyle);
+  border-radius: 5px;
+  padding: 15px;
+  width: 100%;
+  margin-bottom: var(--defaultPadding);
+}
+
+.user .order-item {
+  border: var(--cardBorderStyle);
+  padding: 10px;
+  max-width: 250px;
+  width: 100%;
+  border-radius: 10px;
+
+}
+
+.user .order-items-wrapper {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-start;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.user .side-wrapper {
+  max-width: var(--defaultContainerWidth);
+  width: 100%;
+  margin: auto;
 }

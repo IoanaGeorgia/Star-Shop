@@ -105,9 +105,9 @@ export default function Register() {
 
     return (
 
-        <div className="register">
+        <div className="side register">
             <div className="secondary-decoration decoration"></div>
-            <div className="register-wrapper">
+            <div className="side-wrapper">
                 <p className="title secondary-title">Register</p>
                 {isSuccess ? (
                     <div className="success">

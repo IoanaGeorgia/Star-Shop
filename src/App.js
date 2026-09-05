@@ -11,9 +11,12 @@ import ScrollToTop from "./pages/ScrollTotop";
 import ParralaxCover from "./pages/ParallaxCover";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import GuestRoute from "./pages/GuestRoute";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "./slices/auth";
+import User from "./pages/User";
+import UserRoute from "./pages/UserRoute";
 
 function App() {
 
@@ -29,7 +32,7 @@ function App() {
         throw new Error("Not logged in");
       })
       .then((data) => {
-        dispatch(login(data.user)); 
+        dispatch(login(data.user));
       })
       .catch(() => {
         dispatch(login(null));
@@ -48,8 +51,16 @@ function App() {
         <Route path="/buy-star" element={<BuyStar />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/cart" element={<Cart />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        
+
+        <Route element={<GuestRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+
+        <Route element={<UserRoute />}>
+          <Route path="/user" element={<User />} />
+        </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

@@ -1,6 +1,14 @@
 import { useState } from "react";
+import Loading from "./Loading";
+import Error from "./Error";
 
 export default function Contact() {
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setIsError] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -17,7 +25,7 @@ export default function Contact() {
     setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const submitForm = (e) => {
+  async function submitForm(e) {
     e.preventDefault();
 
     const newErrors = {
@@ -51,15 +59,47 @@ export default function Contact() {
     const hasErrors = Object.values(newErrors).some((arr) => arr.length > 0);
 
     if (!hasErrors) {
-      console.log("Form submitted successfully:", data);
+      setIsLoading(true);
+      try {
+        const response = await fetch('/api/contact', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          credentials: "include",
+          body: JSON.stringify(data)
+        })
+
+        if (!response.ok) {
+          setIsError(true)
+          setIsLoading(false)
+          return
+        }
+
+        const res = await response.json()
+
+        if (res.error) {
+          setIsError(true)
+          setIsLoading(false)
+          return
+        }
+
+        setIsLoading(false);
+        setSuccess(true);
+
+
+      } catch (error) {
+        setIsError(true)
+        setIsLoading(false)
+      }
     }
   };
 
   return (
-    <div className="contact">
+    <div className="side contact">
       <div className="secondary-decoration decoration"></div>
 
-      <div className="contact-wrapper">
+      <div className="side-wrapper">
         <p className="title secondary-title">Contact</p>
         <p className=" subtitle">Talk to us</p>
 
@@ -82,57 +122,62 @@ export default function Contact() {
           <p className="subtitle">Have anything to share with us?</p>
           <p className="subtitle">Leave a message below:</p>
 
-          <form>
-            <label>Name</label>
-            <input
-              type="text"
-              name="name"
-              value={data.name}
-              onChange={handleInput}
-                maxLength="255"
-                placeholder="Your name"
-            />
-            {errors.name &&
-              errors.name.map((error, i) => (
-                <p className="error" key={i}>
-                  {error}
-                </p>
-              ))}
+          {
+            isLoading ? <Loading /> : <> {error ? <Error /> :
+              <>{success ? <div className="success">Message successfully sent</div> :
+                <form>
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={data.name}
+                    onChange={handleInput}
+                    maxLength="255"
+                    placeholder="Your name"
+                  />
+                  {errors.name &&
+                    errors.name.map((error, i) => (
+                      <p className="error" key={i}>
+                        {error}
+                      </p>
+                    ))}
 
-            <label>Email address:</label>
-            <input
-              type="email"
-              name="email"
-              value={data.email}
-              onChange={handleInput}
-              maxLength="255"
-              placeholder="Your email address"
-            />
-            {errors.email &&
-              errors.email.map((error, i) => (
-                <p className="error" key={i}>
-                  {error}
-                </p>
-              ))}
+                  <label>Email address:</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={data.email}
+                    onChange={handleInput}
+                    maxLength="255"
+                    placeholder="Your email address"
+                  />
+                  {errors.email &&
+                    errors.email.map((error, i) => (
+                      <p className="error" key={i}>
+                        {error}
+                      </p>
+                    ))}
 
-            <label>Your message for us:</label>
-            <textarea
-              name="message"
-              value={data.message}
-              onChange={handleInput}
-              maxLength="1000"
-              placeholder="Your message for us"
-            />
-            {errors.message &&
-              errors.message.map((error, i) => (
-                <p className="error" key={i}>
-                  {error}
-                </p>
-              ))}
-            <button className="defaultSmallButton" onClick={submitForm}>
-              Submit
-            </button>
-          </form>
+                  <label>Your message for us:</label>
+                  <textarea
+                    name="message"
+                    value={data.message}
+                    onChange={handleInput}
+                    maxLength="1000"
+                    placeholder="Your message for us"
+                  />
+                  {errors.message &&
+                    errors.message.map((error, i) => (
+                      <p className="error" key={i}>
+                        {error}
+                      </p>
+                    ))}
+                  <button className="defaultSmallButton" onClick={submitForm}>
+                    Submit
+                  </button>
+                </form>}</>}</>}
+
+
         </div>
       </div>
     </div>

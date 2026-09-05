@@ -74,9 +74,9 @@ export default function Login() {
 
     return (
 
-        <div className="login">
+        <div className="side login">
             <div className="secondary-decoration decoration"></div>
-            <div className="login-wrapper">
+            <div className="side-wrapper">
                 <p className="title secondary-title">Login</p>
                 {isSuccess ? (
                     <div className="success">

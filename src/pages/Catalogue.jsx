@@ -7,6 +7,8 @@ import classG from "../assets/AST_SC_G.png";
 import classK from "../assets/AST_SC_K.png";
 import classM from "../assets/AST_SC_M.png";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading"
+import Error from "./Error";
 
 
 export default function Catalogue() {
@@ -144,16 +146,11 @@ export default function Catalogue() {
 
         <div className="star-area">
           {isLoading && (
-            <div className="loadingData">
-              <div className="loader"></div>
-              <span>...loading</span>
-            </div>
+            <Loading />
           )}
 
           {isError && (
-            <div className="errorData">
-              <p> There has been an error. Please try again later.</p>
-            </div>
+            <Error />
           )}
 
           {!isLoading &&
