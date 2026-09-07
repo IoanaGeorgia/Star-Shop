@@ -40,7 +40,8 @@ function App() {
   }, [dispatch]);
 
   return (
-    <BrowserRouter basename="/Star-Shop">
+    // <BrowserRouter basename="/Star-Shop">
+     <BrowserRouter>
       <ScrollToTop />
       <Header />
       <ParralaxCover />
