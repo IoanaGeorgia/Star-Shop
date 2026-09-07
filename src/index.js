@@ -6,6 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { store } from "./store";
 import { Provider } from "react-redux";
 
+
+const API_URL = process.env.REACT_APP_API_URL || "https://stellsi-backend.onrender.com";
+
+const originalFetch = window.fetch;
+window.fetch = async (resource, config = {}) => {
+  if (typeof resource === 'string' && resource.startsWith('/api/')) {
+    resource = `${API_URL}${resource}`;
+  }
+  return originalFetch(resource, config);
+};
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
