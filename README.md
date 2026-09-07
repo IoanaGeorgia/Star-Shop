@@ -3,6 +3,6 @@ Kaeya#123
 
 
 -> edituserinfo
--> logout
--> delete account
-->contactform
+-> guest user
+-> header log out option
+-> link to page for the product ( see if API allows it) from order

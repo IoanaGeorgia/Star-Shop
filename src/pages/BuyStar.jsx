@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addToCart } from "../slices/cart";
+import TopProducts from "./TopProducts";
 
 import classO from "../assets/AST_SC_O.png";
 import classA from "../assets/AST_SC_A.png";
@@ -9,7 +10,7 @@ import classF from "../assets/AST_SC_F.png";
 import classG from "../assets/AST_SC_G.png";
 import classK from "../assets/AST_SC_K.png";
 import classM from "../assets/AST_SC_M.png";
-import table from "../assets/table.png";
+
 
 const getSpectralImage = (spectralClass) => {
   const imageBySpectral = {
@@ -59,7 +60,11 @@ const BuyStar = () => {
     <div id="buy-star-container">
       <div className="secondary-decoration decoration"></div>
       <div className="buy-wrapper">
+       
         <p className="title">{star.name}</p>
+         <p className="back">
+            <button className="defaultSmallButton" onClick={() => navigate(-1)}>Go back</button>
+        </p>
         <div className="star-container-wrapper">
           <div className="star-image">
             <img src={imageSrc} alt={star.name} />
@@ -96,6 +101,8 @@ const BuyStar = () => {
       <div className="buy-btn">
         <button className="defaultSmallButton" onClick={()=>addItemToCart()}>Add to cart</button>
       </div>
+
+      <TopProducts />
     </div>
   );
 };

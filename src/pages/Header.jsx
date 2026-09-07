@@ -54,7 +54,7 @@ export default function Header() {
               <span>Hi, {formatUsername(user.username)}</span>
             </button>
           ) : <button
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login")}
             title="register or login"
             aria-label="redirect to login page"
                 className="defaultSmallButton"
@@ -97,7 +97,7 @@ export default function Header() {
                 <span>See your account</span>
               </button>
             ) : <button
-              onClick={() => navigate("/register")}
+              onClick={() => navigate("/login")}
               title="register or login"
               aria-label="redirect to login page"
                             className="defaultSmallButton"

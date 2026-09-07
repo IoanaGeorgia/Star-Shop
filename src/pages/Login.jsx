@@ -9,6 +9,7 @@ export default function Login() {
     const dispatch = useDispatch();
 
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [dataValues, setDataValues] = useState({
         email: "",
@@ -46,6 +47,7 @@ export default function Login() {
         const hasErrors = Object.values(newErrors).some((arr) => arr.length > 0);
 
         if (!hasErrors) {
+            setIsLoading(true);
             try {
                 const response = await fetch("/api/auth/login", {
                     method: "POST",
@@ -58,16 +60,22 @@ export default function Login() {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(data.message || "Login failed");
+                     setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    call: ["An error occurred during login. Please try again."]
+                }));
+                 setIsLoading(false)
                 }
                 console.log("Login successful:", data);
-                dispatch(login(data));
-                setIsSuccess(true);
+                dispatch(login(data))
+                setIsLoading(false)
+                setIsSuccess(true)
             } catch (error) {
                 setErrors((prevErrors) => ({
                     ...prevErrors,
                     call: ["An error occurred during login. Please try again."]
                 }));
+                 setIsLoading(false)
             }
         }
     }
@@ -107,6 +115,7 @@ export default function Login() {
                     </div>
 
                     {errors.call && <p className="error">{errors.call}</p>}
+                    {isLoading && <p className="center">Loading...</p>}
 
                     <button onClick={(e) => {
                         e.preventDefault();

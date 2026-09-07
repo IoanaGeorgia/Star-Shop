@@ -2,15 +2,30 @@ import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import Error from "./Error";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "../slices/auth";
 
 export default function User() {
 
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
     const user = useSelector((state) => state.auth.user);
 
     const [historyItems, setHistoryItems] = useState({})
     const [userData, setUserData] = useState([])
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
+
+    const [errorDelete, setDeleteError] = useState(false)
+    const [isDeleteLoading, setDeleteIsLoading] = useState(false)
+    const [successDelete, setSuccessDelete] = useState(false)
+
+    const [errorLogOut, setLogOutError] = useState(false)
+    const [isLogOutLoading, setLogOutIsLoading] = useState(false)
+    const [successLogOut, setSuccessLogOut] = useState(false)
+
+    
 
     useEffect(() => {
         loadHistory()
@@ -30,12 +45,14 @@ export default function User() {
             })
 
             if (!response.ok) {
+                setIsLoading(false)
                 setError(true);
                 return
             }
 
             const data = await response.json()
             if (data.error) {
+                setIsLoading(false)
                 setError(true);
                 return
             }
@@ -53,6 +70,84 @@ export default function User() {
         }
     }
 
+
+    async function deleteUser() {
+        setDeleteError(false)
+        setDeleteIsLoading(true)
+        try {
+            const response = await fetch("/api/user/delete", {
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+
+            if (!response.ok) {
+                setDeleteIsLoading(false)
+                setDeleteError(true);
+                return
+            }
+
+            const data = await response.json()
+            if (data.error) {
+                setDeleteIsLoading(false)
+                setDeleteError(true);
+                return
+            }
+
+
+            setDeleteError(false)
+            setDeleteIsLoading(false)
+            setSuccessDelete(true)
+             dispatch(login(null));
+
+
+        } catch (error) {
+            console.log(error)
+            setDeleteIsLoading(false)
+            setDeleteError(true)
+        }
+    }
+
+
+    async function logout() {
+        setLogOutError(false)
+        setLogOutIsLoading(true)
+        try {
+            const response = await fetch("/api/auth/logout", {
+                method: "GET",
+                credentials: 'include',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+            })
+
+            if (!response.ok) {
+                setLogOutIsLoading(false)
+                setLogOutError(true);
+                return
+            }
+
+            const data = await response.json()
+            if (data.error) {
+                setLogOutIsLoading(false)
+                setLogOutError(true);
+                return
+            }
+
+
+            setLogOutError(false)
+            setLogOutIsLoading(false)
+            setSuccessLogOut(true)
+            dispatch(login(null));
+
+        } catch (error) {
+            console.log(error)
+            setLogOutIsLoading(false)
+            setLogOutError(true)
+        }
+    }
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -93,6 +188,18 @@ export default function User() {
                         <p>Username: {user?.username || "Not available"}</p>
                         <p>Terms accepted: {userData.termsAccepted ? "yes" : "no"}</p>
                         <p>Account created: {userData.createdAt ? formatDate(userData.createdAt) : "Date not available"}</p>
+
+                        <div className="button-wrapper">
+                            <button className="defaultSmallButton" onClick={logout} disabled={isLogOutLoading}>Logout</button>
+                            {isLogOutLoading && <div className="loading">Logging you out...</div>}
+                            {errorLogOut && <div className="error">An error has occured</div>}
+                            {successLogOut && <div className="success">You have been successfully logged out. You will be redirected</div>}
+
+                            <button className="defaultSmallButton" onClick={deleteUser} disabled={isDeleteLoading}>Delete account</button>
+                            {isDeleteLoading && <div className="loading">Deleting your account...</div>}
+                            {errorDelete && <div className="error">Could not delete your account</div>}
+                            {successDelete && <div className="success">Your account was successfully deleted. You will be redirected</div>}
+                        </div>
                     </div>
                 </div>
 
@@ -102,6 +209,7 @@ export default function User() {
 
                         <p className="subtitle">Purchase History</p>
                         <div className="orders-wrapper">
+                            {historyItems.length === 0 && <div>No orders yet</div>}
                             {historyItems.length > 0 && historyItems.map((order) => (<div className="order">
                                 <p>Order placed at: {formatDate(order.createdAt)}</p>
                                 <p>Total sum: {order.totalSum}</p>

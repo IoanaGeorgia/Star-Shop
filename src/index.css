@@ -506,7 +506,7 @@ button.default-glow:hover {
 #hero-reasons {
   padding-left: 20px;
   padding-right: 20px;
-  margin-top: 10rem;
+  margin-top: 2rem;
   background-image: linear-gradient(rgba(10, 10, 20, 0.432), rgba(10, 10, 20, 0.74)),
     url("./assets/credentials.jpg");
   background-position: 50% 50%;
@@ -1106,7 +1106,6 @@ footer .logo img {
 /* catalogue */
 
 #catalogue {
-  background-color: black;
   min-height: calc(100vh - 5rem);
 }
 
@@ -1115,7 +1114,7 @@ footer .logo img {
   z-index: 2;
 }
 
-#catalogue .catalogue-wrapper {
+.catalogue-wrapper {
   margin: auto;
   max-width: 80%;
   padding-left: 15px;
@@ -1129,7 +1128,7 @@ footer .logo img {
   position: relative;
 }
 
-#catalogue .catalogue-cons {
+.catalogue-cons {
   padding: 1rem;
   padding-top: 2rem;
   color: white;
@@ -1141,8 +1140,7 @@ footer .logo img {
   gap: 0.5rem;
   margin: 1rem;
 }
-
-#catalogue .catalogue-cons li {
+.catalogue-cons li {
   box-sizing: border-box;
   list-style-type: none;
   cursor: pointer;
@@ -1156,19 +1154,19 @@ footer .logo img {
 }
 
 
-#catalogue .catalogue-cons li.defaultSmallButton {
+.catalogue-cons li.defaultSmallButton {
   border: 2px solid var(--defaultText);
   box-shadow: 0 0 12px var(--defaultText), 0 0 4px var(--defaultText) inset;
   font-size: 1rem !important;
 }
 
-#catalogue .catalogue-cons li:hover {
+.catalogue-cons li:hover {
   color: var(--defaultText);
   text-shadow: var(--defaultGlow);
 
 }
 
-#catalogue .star-area {
+.star-area {
   display: flex;
   justify-content: center;
   gap: 45px;
@@ -1183,7 +1181,7 @@ footer .logo img {
 
 
 
-#catalogue .star-product-wrapper {
+.star-product-wrapper {
   border-radius: 10px;
   color: white;
   max-width: 250px;
@@ -1197,7 +1195,7 @@ footer .logo img {
 
 
 
-#catalogue .star-product-wrapper-inner {
+.star-product-wrapper-inner {
   padding: 1rem;
   padding-bottom: 1.5rem;
   border: 2px solid var(--cardBorder);
@@ -1208,14 +1206,14 @@ footer .logo img {
 }
 
 
-#catalogue .star-product-wrapper li {
+.star-product-wrapper li {
   list-style-type: none;
   margin-bottom: 5px;
   letter-spacing: 1.1px;
   text-align: center;
 }
 
-#catalogue .star-product-wrapper img {
+.star-product-wrapper img {
   width: 100%;
   max-width: 100px;
   padding-bottom: 15px;
@@ -1223,27 +1221,27 @@ footer .logo img {
   margin: auto;
 }
 
-#catalogue .star-product-wrapper p.title {
+.star-product-wrapper p.title {
   text-align: center;
   font-weight: bolder;
   font-size: 1.5rem;
   padding-bottom: 0.5rem;
 }
 
-#catalogue .star-product-wrapper .content {
+.star-product-wrapper .content {
   margin-top: 15px;
 }
 
-#catalogue .star-product-wrapper .default-glow {
+.star-product-wrapper .default-glow {
   width: 100%;
   margin-top: 15px;
 }
 
-#catalogue .star-product-wrapper span {
+.star-product-wrapper span {
   font-weight: bolder;
 }
 
-#catalogue .see-more {
+.catalogue .see-more {
   border-radius: 5px;
   padding: 0.5rem 0.5rem;
   border: none;
@@ -1258,22 +1256,22 @@ footer .logo img {
 }
 
 @media(max-width:1142px) {
-  #catalogue .catalogue-wrapper {
+  .catalogue-wrapper {
     max-width: 100%;
   }
 
-  #catalogue .catalogue-cons {
+  .catalogue-cons {
     margin: 0px
   }
 }
 
 
 @media(max-width:914px) {
-  #catalogue .catalogue-cons {
+  .catalogue-cons {
     gap: 0rem;
   }
 
-  #catalogue .star-area {
+  .catalogue .star-area {
     margin-top: 4rem;
   }
 }
@@ -1331,6 +1329,13 @@ footer .logo img {
   height: 100%;
   padding-top: var(--headerHeight);
   padding-bottom: var(--headerHeight);
+}
+
+.buy-wrapper .back{
+  text-align: left;
+  max-width:var(--defaultContainerWidth);
+  width:100%;
+  margin: auto;
 }
 
 .buy-wrapper {
@@ -1883,4 +1888,52 @@ form .error {
   max-width: var(--defaultContainerWidth);
   width: 100%;
   margin: auto;
+}
+
+.user-info button.defaultSmallButton{
+  max-width: fit-content;
+  padding:5px 10px;
+  margin:unset;
+  font-size:12px;
+}
+
+.user-info .button-wrapper{
+  margin-top:35px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+  gap:30px;
+}
+
+.user-info .loading, .user-info .error, .user-info .success{
+  font-size:12px;
+}
+
+.user-info .success{
+  max-width:min-content;
+  padding: 0px;
+  margin:unset;
+  text-align: left;
+}
+
+.center{
+  width:100%;
+  text-align: center;
+}
+
+.top-stars{
+  margin-top:4rem;
+  margin-bottom:4rem;
+}
+
+.top-stars .catalogue-wrapper{
+  padding-bottom: 0px;
+}
+
+.top-stars .title{
+  margin-bottom:var(--defaultPadding);
+  text-align: center;
+  font-size:2rem;
+  width:100%;
 }

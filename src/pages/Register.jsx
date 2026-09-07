@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import login from "../slices/auth";
+import {login} from "../slices/auth";
 
 export default function Register() {
 
@@ -9,6 +9,7 @@ export default function Register() {
     const dispatch = useDispatch();
 
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [dataValues, setDataValues] = useState({
         username: "",
@@ -71,6 +72,7 @@ export default function Register() {
         const hasErrors = Object.values(newErrors).some((arr) => arr.length > 0);
 
         if (!hasErrors) {
+            setIsLoading(true)
 
             const dataToSend = {
                 username: dataValues.username.trim(),
@@ -89,16 +91,23 @@ export default function Register() {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(data.message || "Registration failed");
+                    setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    call: ["Registration failed. Please try again"]
+                }));
+                setIsLoading(false);
                 }
                 console.log("Register successful:", data);
-                dispatch(login(data));
+                dispatch(login(data.data));
+                setIsLoading(false);
                 setIsSuccess(true);
+
             } catch (error) {
                 setErrors((prevErrors) => ({
                     ...prevErrors,
                     call: ["An error occurred during registration. Please try again."]
                 }));
+                setIsLoading(false)
             }
         }
     }
@@ -180,6 +189,8 @@ export default function Register() {
                                 ))}
                         </div>
                         {errors.call && <p className="error">{errors.call}</p>}
+                        {isLoading && <p className="center">Loading...</p>}
+
                         <button onClick={(e) => {
                             e.preventDefault();
                             registerUser();

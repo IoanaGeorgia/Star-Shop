@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import TopProducts from "./TopProducts";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -118,6 +119,8 @@ export default function Home() {
             </div>
           </div>
         </div>
+
+        <TopProducts />
 
         <div id="hero-reasons">
           <p className="title">Credentials</p>

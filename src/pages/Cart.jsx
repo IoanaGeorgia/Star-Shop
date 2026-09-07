@@ -11,6 +11,7 @@ import { addToCart, removeFromCart, deleteItemFromCart, emptyCart } from "../sli
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 import Error from "./Error";
+import TopProducts from "./TopProducts";
 
 export default function Cart() {
 
@@ -393,6 +394,7 @@ export default function Cart() {
         }
 
       </div>
+        <TopProducts />
     </div>
   );
 }
