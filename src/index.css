@@ -1346,6 +1346,7 @@ footer .logo img {
   align-items: center;
   padding-left: var(--defaultPadding);
   padding-right: var(--defaultPadding);
+  z-index:99;
 }
 
 #buy-star-container .buy-btn {
@@ -1357,6 +1358,7 @@ footer .logo img {
   text-align: center;
   padding-left: var(--defaultPadding);
   padding-right: var(--defaultPadding);
+  z-index:99;
 }
 
 
@@ -1722,6 +1724,12 @@ form .error {
   width: 100%;
 }
 
+@media(max-width:785px){
+  .cart-inner-wrapper{
+    flex-direction: column;
+  }
+}
+
 .payment-area {
   flex: 1;
   max-width: 500px;
@@ -1790,12 +1798,14 @@ form .error {
 
 }
 
-.userAuth {
+.userAuth, .payment-area form div.userAuth {
   font-size: var(--smallFontSize);
   color: var(--defaultText);
   display: flex;
   gap: 5px;
-  margin-top: var(--defaultPadding);
+  margin-top: 10px;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .side {
@@ -1890,31 +1900,33 @@ form .error {
   margin: auto;
 }
 
-.user-info button.defaultSmallButton{
+.user-info button.defaultSmallButton,
+.user-history button.defaultSmallButton{
   max-width: fit-content;
   padding:5px 10px;
   margin:unset;
   font-size:12px;
+  margin-top:30px;
 }
 
 .user-info .button-wrapper{
-  margin-top:35px;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex-direction: column;
-  gap:30px;
 }
 
 .user-info .loading, .user-info .error, .user-info .success{
   font-size:12px;
+  max-width: fit-content;
 }
 
 .user-info .success{
-  max-width:min-content;
+  max-width:fit-content;
   padding: 0px;
   margin:unset;
   text-align: left;
+  margin-top:15px;
 }
 
 .center{
@@ -1925,6 +1937,8 @@ form .error {
 .top-stars{
   margin-top:4rem;
   margin-bottom:4rem;
+  position: relative;
+  z-index:99;
 }
 
 .top-stars .catalogue-wrapper{
@@ -1936,4 +1950,30 @@ form .error {
   text-align: center;
   font-size:2rem;
   width:100%;
+}
+
+.user form{
+  max-width:300px;
+  width:100%;
+}
+
+.user form div{
+  display: flex;
+  flex-direction: column;
+  font-size:12px;
+  gap:10px;
+  margin-top:15px;
+}
+
+.user form input{
+  padding:10px;
+}
+
+.user-info form button.defaultSmallButton{
+  margin-top:15px;
+  margin-bottom: 5px;
+}
+
+.user-info form .error{
+  margin-top:5px;
 }

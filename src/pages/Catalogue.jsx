@@ -135,6 +135,7 @@ export default function Catalogue() {
             constellations.map((constellation) => (
               <li
                 onClick={() => getStarsByCons(constellation)}
+                key={constellation}
                 className={
                   isSelected === constellation ? "defaultSmallButton" : ""
                 }

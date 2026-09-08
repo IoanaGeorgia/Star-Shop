@@ -94,6 +94,10 @@ export default function Cart() {
       }
     }
 
+    if(!user){
+      newErrors.user = "You have to login or create an account to buy this item!"
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -199,7 +203,7 @@ export default function Cart() {
             <div className="cart-inner-wrapper">
               <div className="item-area">
 
-                {!user ?? <div className="userAuth">
+                {!user && <div className="userAuth">
                   <button onClick={() => navigate("/login")}>Log in</button>
                   or
                   <button onClick={() => navigate("/register")}>Register</button>
@@ -386,7 +390,14 @@ export default function Cart() {
                   )}
 
                   <button type="submit" className="defaultSmallButton">Place Order</button>
-                  {errors.form && <p className="error">{errors.form}</p>}
+
+                  {errors.user && <p className="error">{errors.user}</p>}
+
+                  {!user && <div className="userAuth">
+                  <button onClick={() => navigate("/login")}>Log in</button>
+                  or
+                  <button onClick={() => navigate("/register")}>Register</button>
+                </div>}
                 </form>
               </div>}
 

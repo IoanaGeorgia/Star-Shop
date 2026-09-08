@@ -9,18 +9,24 @@ export const authSlice = createSlice({
   },
   reducers: {
     login: (state, action) => {
-      state.user = action.payload;
-      state.isAuthenticated = true;
-      state.isLoading = false;
+      state.user = action.payload
+      state.isAuthenticated = true
+      state.isLoading = false
+    },
+
+    editUser:(state, action) =>{
+      state.user = {...state.user, ...action.payload}
+      state.isAuthenticated = true
+      state.isLoading = false
     },
     logout: (state) => {
-      state.user = null;
-      state.isAuthenticated = false;
+      state.user = null
+      state.isAuthenticated = false
     }
   }
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, editUser, logout } = authSlice.actions;
 
 
 export default authSlice.reducer;
