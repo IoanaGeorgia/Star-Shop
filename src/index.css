@@ -1816,7 +1816,7 @@ form .error {
 .side-wrapper {
   position: relative;
   padding: var(--defaultPadding);
-  padding-top: calc(var(--headerHeight) +225px);
+  /* padding-top: calc(var(--headerHeight) +225px); */
   display: flex;
   flex-direction: column;
   gap: var(--defaultPadding);
