@@ -96,6 +96,7 @@ export default function Register() {
                     call: ["Registration failed. Please try again"]
                 }));
                 setIsLoading(false);
+                return
                 }
                 console.log("Register successful:", data);
                 dispatch(login(data.data));

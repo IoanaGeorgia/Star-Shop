@@ -65,8 +65,9 @@ export default function Login() {
                     call: ["An error occurred during login. Please try again."]
                 }));
                  setIsLoading(false)
+                 return
                 }
-                console.log("Login successful:", data);
+                console.log("Login successful");
                 dispatch(login(data))
                 setIsLoading(false)
                 setIsSuccess(true)
