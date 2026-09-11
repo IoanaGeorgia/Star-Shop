@@ -23,9 +23,20 @@ export default function Cart() {
 
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [totalToPay, setTotalToPay] = useState(0)
+  const [voucher, setVoucher] = useState({
+    name: "",
+    value:"",
+    loading: false,
+    error: false,
+    success: false
+  })
+
+  const [voucherAdded, setVoucherAdded] = useState(false)
 
   useEffect(() => {
     localStorage.setItem("cart_items", JSON.stringify(cartItems));
+    totalSum()
   }, [cartItems]);
 
   const imageBySpectral = {
@@ -94,7 +105,7 @@ export default function Cart() {
       }
     }
 
-    if(!user){
+    if (!user) {
       newErrors.user = "You have to login or create an account to buy this item!"
     }
 
@@ -190,10 +201,89 @@ export default function Cart() {
     dispatch(emptyCart());
   };
 
+  const totalSum = () => {
+    let temp = cartItems.reduce((acc, item) => acc + item.count * 20000, 0);
+    setTotalToPay(temp)
+  }
+
+  const calculateVoucher = async () => {
+    setVoucher((prev) => ({ ...prev, error: "" }))
+    if (!voucher || (voucher && voucher.length >= 9 && voucher.length <= 4)) {
+      setVoucher((prev) => ({ ...prev, error: true }))
+      return
+    }
+    setVoucher((prev) => ({ ...prev, loading: true }))
+    try {
+      const response = await fetch('/api/order/voucher', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({ voucherCode: voucher.name })
+      })
+
+      if (!response.ok) {
+        setVoucher((prev) => ({ ...prev, error: "Invalid voucher code", loading:false }))
+        return
+      }
+
+      const data = await response.json()
+
+      if (data.error) {
+        if (data.code) {
+          if (data.code === "VOUCHER_EXPIRED") {
+            setVoucher((prev) => ({ ...prev, error: "This voucher code has already expired", loading:false }))
+            return
+          }
+          if (data.code === "NO_VOUCHER") {
+            setVoucher((prev) => ({ ...prev, error: "Voucher code doesn't exist", loading:false }))
+            return
+          }
+          setVoucher((prev) => ({ ...prev, error: "Invalid voucher code", loading:false }))
+          return
+        }
+      }
+
+      setVoucherAdded(true)
+
+      let tempString  = ""
+      let temp;
+
+      if (data.data.percent) {
+        temp = totalToPay - ((totalToPay * data.data.sum) / 100)
+        tempString = data.data.sum + "%"
+      }
+      else {
+        temp = totalToPay - data.data.sum
+        tempString = data.data.sum + "EE"
+      }
+
+      setTotalToPay(temp)
+      setVoucher((prev) => ({ ...prev, name: data.data.code, value: tempString , loading:false, success:true }))
+
+
+    } catch (error) {
+      setVoucher((prev) => ({ ...prev, error: true, loading:false }))
+    }
+
+  }
+
+  const removeVoucher = () => {
+    totalSum()
+    setVoucherAdded(false)
+    setVoucher({
+      name: "",
+      value:"",
+      loading: false,
+      error: false,
+      success: false
+    })
+  }
+
   return (
     <div className="cart">
       <div className="decoration secondary-decoration"></div>
-
 
       <div className="cart-wrapper">
         <p className="title">Your cart</p>
@@ -209,8 +299,8 @@ export default function Cart() {
                   <button onClick={() => navigate("/register")}>Register</button>
                 </div>}
                 <div className="cart-items">
-                  {cartItems.length ? (
-                    cartItems.map((star, index) => (
+                  {cartItems.length ? (<>
+                    {cartItems.map((star, index) => (
                       <div className="card" key={star.id || star.name || index}>
                         <div>
                           <img
@@ -239,6 +329,26 @@ export default function Cart() {
                         </div>
                       </div>
                     ))
+                    }
+                    <div className="cart-info">
+                      <p><span>Total to pay:</span> {totalToPay}EE</p>
+                      <div className="voucher-area">
+                        <p>Have a voucher?</p>
+                        <input type="text" value={voucher.name} onChange={(e) => setVoucher((prev) => ({ ...prev, name: e.target.value }))}
+                          placeholder="Add your voucher here!"></input>
+                        <button className="defaultSmallButton" onClick={() => calculateVoucher()} disabled={voucherAdded}>Use voucher</button>
+                        {voucher.error && <p className="error">{voucher.error}</p>}
+                        {voucher.loading && <p>Loading voucher</p>}
+                        {voucher.success && <p>Your -{voucher.value} voucher was successfully registered!</p>}
+                        {voucherAdded && <div>
+                          <p>Your voucher code:{voucher.name}</p>
+                          <button className="defaultSmallButton removeVoucher" onClick={() => removeVoucher()}>remove voucher</button>
+                        </div>
+                        }
+                      </div>
+                    </div>
+                  </>
+
                   ) : (
                     <div className="error no-items">No items in cart</div>
                   )}
@@ -394,10 +504,10 @@ export default function Cart() {
                   {errors.user && <p className="error">{errors.user}</p>}
 
                   {!user && <div className="userAuth">
-                  <button onClick={() => navigate("/login")}>Log in</button>
-                  or
-                  <button onClick={() => navigate("/register")}>Register</button>
-                </div>}
+                    <button onClick={() => navigate("/login")}>Log in</button>
+                    or
+                    <button onClick={() => navigate("/register")}>Register</button>
+                  </div>}
                 </form>
               </div>}
 
@@ -405,7 +515,7 @@ export default function Cart() {
         }
 
       </div>
-        <TopProducts />
+      <TopProducts />
     </div>
   );
 }

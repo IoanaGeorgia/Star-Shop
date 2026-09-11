@@ -9,7 +9,6 @@ import { Provider } from "react-redux";
 
 const API_URL = process.env.REACT_APP_API_URL || "https://stellsi-backend.onrender.com";
 
-
 const originalFetch = window.fetch;
 window.fetch = async (resource, config = {}) => {
   if (typeof resource === 'string' && resource.startsWith('/api/')) {

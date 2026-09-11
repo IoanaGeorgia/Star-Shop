@@ -13,3 +13,9 @@ Kaeya#123
 Otto@apocalypse.com
 Otto#123
 
+
+vouchers:
+not active: GGRATIS
+percent:GRATIS
+sum:GRATISS
+(for testing purposes, they are reusable)
