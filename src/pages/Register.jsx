@@ -179,7 +179,8 @@ export default function Register() {
                                         onChange={(e) => setDataValues({ ...dataValues, termsAccepted: e.target.checked })}
                                     />
                                     <span className="checkmark"></span>
-                                    I agree to the terms and conditions
+                                    I agree to use this site only for lawful actions and I declare that all illegal or malicious actions done on this account are solely mine. StellSi is not responsable
+                                    for any of my actions in front of the law or any higher autority.
                                 </label>
                             </div>
                             {errors.termsAccepted &&
