@@ -6,7 +6,7 @@ import classF from "../assets/AST_SC_F.png";
 import classG from "../assets/AST_SC_G.png";
 import classK from "../assets/AST_SC_K.png";
 import classM from "../assets/AST_SC_M.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Loading from "./Loading"
 import Error from "./Error";
 
@@ -15,13 +15,17 @@ export default function TopProducts() {
   const [stars, setStars] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const [isError, setError] = useState(true);
-  const [isSelected, setIsSelected] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSeeMore = (star) => {
-    navigate("/buy-star", { state: { star } });
-  };
+const handleSeeMore = (star) => {
+  const targetPath = "/buy-star";
+  navigate(targetPath, { state: { star }, replace: location.pathname === targetPath });
+  if (location.pathname === targetPath) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
 
   const imageBySpectral = {
     O: classO,
@@ -44,7 +48,6 @@ export default function TopProducts() {
     setLoading(true);
     setError(false);
 
-    setIsSelected("");
     try {
       const response = await fetch("/api/stars/topstars");
 

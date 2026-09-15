@@ -41,7 +41,6 @@ export default function Catalogue() {
     "Draco",
     "Cygnus",
     "Lyra",
-    "Hercules",
     "Perseus",
     "Auriga",
     "Andromeda"

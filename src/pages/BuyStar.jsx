@@ -42,13 +42,17 @@ const BuyStar = () => {
   }
 }
 
+  const goBack = () =>{
+    window.scrollTo(0, 0);
+    navigate('/catalogue');
+  }
 
   if (!star) {
     return (
       <div id="buy-star-container">
         <p>
           No star data available.{" "}
-          <button onClick={() => navigate(-1)}>Go back</button>
+          <button onClick={() =>goBack()}>Go back</button>
         </p>
       </div>
     );
@@ -63,7 +67,7 @@ const BuyStar = () => {
        
         <p className="title">{star.name}</p>
          <p className="back">
-            <button className="defaultSmallButton" onClick={() => navigate(-1)}>Go back</button>
+            <button className="defaultSmallButton" onClick={() =>goBack()}>Go back</button>
         </p>
         <div className="star-container-wrapper">
           <div className="star-image">
@@ -93,7 +97,7 @@ const BuyStar = () => {
               <span>Declination:</span> {star.declination}
             </p>
 
-            <p className="price">456576 EE</p>
+            <p className="price">20000 EE</p>
           </div>
         </div>
       </div>

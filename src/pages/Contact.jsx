@@ -115,7 +115,7 @@ export default function Contact() {
 
         <div className="card">
           <div>Address:</div>
-          <div>Longdon Street, Atlanta, Georgia</div>
+          <div>Ember City, Colona River, Emberfall</div>
         </div>
 
         <div className="form-wrapper">

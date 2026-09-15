@@ -26,7 +26,8 @@ export default function Cart() {
   const [totalToPay, setTotalToPay] = useState(0)
   const [voucher, setVoucher] = useState({
     name: "",
-    value:"",
+    value: "",
+    id:"",
     loading: false,
     error: false,
     success: false
@@ -48,6 +49,16 @@ export default function Cart() {
     K: classK,
     M: classM,
   };
+
+  const CITIES_DATA = [
+    { city: "Aethelgard", zip: "AE-101" },
+    { city: "Oakhaven", zip: "OK-302" },
+    { city: "Valeria Prime", zip: "VP-909" },
+    { city: "Verdant Reach", zip: "VR-404" },
+    { city: "Silverpeak", zip: "SP-707" },
+    { city: "Emberfall", zip: "EF-505" },
+    { city: "Lunaria", zip: "LN-808" },
+  ];
 
   const getSpectralImage = (spectralClass) => {
     const spectralType = spectralClass?.charAt(0);
@@ -137,6 +148,7 @@ export default function Cart() {
     const orderData = {
       userId: user.id,
       totalSum: cartItems.length * 20000,
+      voucherId: voucher?.id || null,
       billingAddress: {
         fullName: formData.fullName,
         email: formData.email,
@@ -201,6 +213,27 @@ export default function Cart() {
     dispatch(emptyCart());
   };
 
+  const handleCityChange = (e, isShipping = false) => {
+    const selectedCity = e.target.value;
+    const matched = CITIES_DATA.find(
+      (item) => item.city.toLowerCase() === selectedCity.toLowerCase()
+    );
+
+    if (isShipping) {
+      setFormData((prev) => ({
+        ...prev,
+        shippingCity: selectedCity,
+        shippingZip: matched ? matched.zip : prev.shippingZip,
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        city: selectedCity,
+        zip: matched ? matched.zip : prev.zip,
+      }));
+    }
+  };
+
   const totalSum = () => {
     let temp = cartItems.reduce((acc, item) => acc + item.count * 20000, 0);
     setTotalToPay(temp)
@@ -224,7 +257,7 @@ export default function Cart() {
       })
 
       if (!response.ok) {
-        setVoucher((prev) => ({ ...prev, error: "Invalid voucher code", loading:false }))
+        setVoucher((prev) => ({ ...prev, error: "Invalid voucher code", loading: false }))
         return
       }
 
@@ -233,21 +266,21 @@ export default function Cart() {
       if (data.error) {
         if (data.code) {
           if (data.code === "VOUCHER_EXPIRED") {
-            setVoucher((prev) => ({ ...prev, error: "This voucher code has already expired", loading:false }))
+            setVoucher((prev) => ({ ...prev, error: "This voucher code has already expired", loading: false }))
             return
           }
           if (data.code === "NO_VOUCHER") {
-            setVoucher((prev) => ({ ...prev, error: "Voucher code doesn't exist", loading:false }))
+            setVoucher((prev) => ({ ...prev, error: "Voucher code doesn't exist", loading: false }))
             return
           }
-          setVoucher((prev) => ({ ...prev, error: "Invalid voucher code", loading:false }))
+          setVoucher((prev) => ({ ...prev, error: "Invalid voucher code", loading: false }))
           return
         }
       }
 
       setVoucherAdded(true)
 
-      let tempString  = ""
+      let tempString = ""
       let temp;
 
       if (data.data.percent) {
@@ -260,11 +293,11 @@ export default function Cart() {
       }
 
       setTotalToPay(temp)
-      setVoucher((prev) => ({ ...prev, name: data.data.code, value: tempString , loading:false, success:true }))
+      setVoucher((prev) => ({ ...prev, name: data.data.code, value: tempString, loading: false, success: true, id:data.data.id }))
 
 
     } catch (error) {
-      setVoucher((prev) => ({ ...prev, error: true, loading:false }))
+      setVoucher((prev) => ({ ...prev, error: true, loading: false }))
     }
 
   }
@@ -274,7 +307,8 @@ export default function Cart() {
     setVoucherAdded(false)
     setVoucher({
       name: "",
-      value:"",
+      value: "",
+      id:"",
       loading: false,
       error: false,
       success: false
@@ -349,8 +383,10 @@ export default function Cart() {
                     </div>
                   </>
 
-                  ) : (
-                    <div className="error no-items">No items in cart</div>
+                  ) : (<>
+                    {!success && <div className="error no-items">No items in cart</div>}
+                    {success && <p>Order successfully registered</p>}
+                    </>
                   )}
                 </div>
               </div>
@@ -396,6 +432,13 @@ export default function Cart() {
                     {errors.address && <p className="error">{errors.address}</p>}
                   </div>
 
+                  <datalist id="city-list">
+                    {CITIES_DATA.map((item) => (
+                      <option key={item.city} value={item.city}>
+                        {item.zip}
+                      </option>
+                    ))}
+                  </datalist>
 
                   <div>
                     <label htmlFor="city">City</label>
@@ -403,8 +446,10 @@ export default function Cart() {
                       type="text"
                       id="city"
                       name="city"
+                      list="city-list"
                       value={formData.city}
-                      onChange={handleChange}
+                      onChange={(e) => handleCityChange(e, false)}
+                      placeholder="Type to search cities..."
                     />
                     {errors.city && <p className="error">{errors.city}</p>}
                   </div>
@@ -468,18 +513,20 @@ export default function Cart() {
                       </div>
 
                       <div className="form-row">
+
+
                         <div>
                           <label htmlFor="shippingCity">City</label>
                           <input
                             type="text"
                             id="shippingCity"
                             name="shippingCity"
+                            list="city-list"
                             value={formData.shippingCity}
-                            onChange={handleChange}
+                            onChange={(e) => handleCityChange(e, true)}
+                            placeholder="Type to search cities..."
                           />
-                          {errors.shippingCity && (
-                            <p className="error">{errors.shippingCity}</p>
-                          )}
+                          {errors.shippingCity && <p className="error">{errors.shippingCity}</p>}
                         </div>
 
                         <div>
@@ -491,10 +538,10 @@ export default function Cart() {
                             value={formData.shippingZip}
                             onChange={handleChange}
                           />
-                          {errors.shippingZip && (
-                            <p className="error">{errors.shippingZip}</p>
-                          )}
+                          {errors.shippingZip && <p className="error">{errors.shippingZip}</p>}
                         </div>
+
+
                       </div>
                     </div>
                   )}
